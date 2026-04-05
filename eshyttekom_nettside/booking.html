@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+
+<html class="light" lang="no"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;family=Manrope:wght@200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script src="bookinger.js"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-error": "#ffffff",
+              "surface-container-highest": "#e4e2dd",
+              "error-container": "#ffdad6",
+              "on-primary-fixed": "#111f12",
+              "primary": "#182519",
+              "secondary": "#785833",
+              "background": "#fbf9f4",
+              "surface-container-high": "#eae8e3",
+              "tertiary-container": "#423528",
+              "surface-variant": "#e4e2dd",
+              "on-primary": "#ffffff",
+              "surface-bright": "#fbf9f4",
+              "inverse-on-surface": "#f2f1ec",
+              "primary-container": "#2d3b2d",
+              "on-tertiary": "#ffffff",
+              "outline-variant": "#c4c8c0",
+              "on-tertiary-container": "#b09e8c",
+              "on-secondary-fixed": "#2b1700",
+              "on-error-container": "#93000a",
+              "surface": "#fbf9f4",
+              "on-secondary-fixed-variant": "#5e411e",
+              "on-secondary-container": "#795933",
+              "on-background": "#1b1c19",
+              "on-primary-container": "#95a593",
+              "primary-fixed": "#d7e7d3",
+              "surface-container-low": "#f5f3ee",
+              "on-tertiary-fixed": "#241a0e",
+              "outline": "#747872",
+              "on-tertiary-fixed-variant": "#524436",
+              "inverse-surface": "#30312e",
+              "secondary-fixed": "#ffddb9",
+              "on-surface-variant": "#444842",
+              "error": "#ba1a1a",
+              "tertiary-fixed-dim": "#d7c3b0",
+              "surface-container": "#f0eee9",
+              "surface-dim": "#dbdad5",
+              "inverse-primary": "#bbcbb8",
+              "surface-container-lowest": "#ffffff",
+              "on-surface": "#1b1c19",
+              "tertiary-fixed": "#f4dfcb",
+              "on-secondary": "#ffffff",
+              "primary-fixed-dim": "#bbcbb8",
+              "secondary-container": "#fed2a3",
+              "secondary-fixed-dim": "#e9bf91",
+              "tertiary": "#2b2014",
+              "surface-tint": "#536252",
+              "on-primary-fixed-variant": "#3c4a3c"
+            },
+            fontFamily: {
+              "headline": ["Newsreader"],
+              "body": ["Manrope"],
+              "label": ["Manrope"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Manrope', sans-serif;
+            background-color: #fbf9f4;
+            color: #1b1c19;
+        }
+        .serif-text { font-family: 'Newsreader', serif; }
+        .glass-nav {
+            background: rgba(251, 249, 244, 0.8);
+            backdrop-filter: blur(12px);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background selection:bg-primary-fixed selection:text-on-primary-fixed">
+<nav class="fixed top-0 w-full z-50 glass-nav transition-colors duration-300">
+<div class="flex justify-between items-center px-8 py-6 max-w-7xl mx-auto">
+<a class="font-serif text-2xl tracking-tighter text-emerald-900 dark:text-emerald-500" href="index.html">Hyttekom</a>
+<div class="hidden md:flex items-center space-x-8 font-sans text-lg tracking-tight font-serif">
+<a class="text-stone-600 dark:text-stone-400 font-medium hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors duration-300" href="index.html">Hjem</a>
+<a class="text-stone-600 dark:text-stone-400 font-medium hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors duration-300" href="fasiliteter.html">Fasiliteter</a>
+<a class="text-stone-600 dark:text-stone-400 font-medium hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors duration-300" href="bildegalleri.html">Galleri</a>
+<a class="text-emerald-900 dark:text-emerald-400 border-b-2 border-emerald-900 dark:border-emerald-400 pb-1 font-serif tracking-tight text-lg" href="booking.html">Bestill</a>
+<a class="text-stone-600 dark:text-stone-400 font-medium hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors duration-300" href="om-oss.html">Om Oss</a>
+</div>
+<a href="booking.html" class="hidden md:inline-flex bg-primary text-on-primary px-6 py-2 rounded-full font-label font-bold hover:bg-primary-container transition-all text-sm uppercase tracking-widest">Reserver</a>
+<button id="mobile-menu-btn" class="md:hidden p-2 text-emerald-900" aria-label="Meny"><span class="material-symbols-outlined">menu</span></button>
+</div>
+<div id="mobile-menu" class="hidden absolute top-full left-0 w-full bg-stone-50/95 backdrop-blur-md border-t border-stone-200 py-6 px-8 flex flex-col space-y-4">
+<a class="font-serif text-lg text-stone-700 hover:text-emerald-800 transition-colors" href="index.html">Hjem</a>
+<a class="font-serif text-lg text-stone-700 hover:text-emerald-800 transition-colors" href="fasiliteter.html">Fasiliteter</a>
+<a class="font-serif text-lg text-stone-700 hover:text-emerald-800 transition-colors" href="bildegalleri.html">Galleri</a>
+<a class="font-serif text-lg text-stone-700 hover:text-emerald-800 transition-colors" href="booking.html">Bestill</a>
+<a class="font-serif text-lg text-stone-700 hover:text-emerald-800 transition-colors" href="om-oss.html">Om Oss</a>
+<a href="booking.html" class="bg-primary text-on-primary px-6 py-3 rounded-full font-label font-bold text-sm uppercase tracking-widest text-center">Reserver</a>
+</div>
+</nav>
+<script>
+document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+  const menu = document.getElementById('mobile-menu');
+  menu.classList.toggle('hidden');
+  this.querySelector('.material-symbols-outlined').textContent = menu.classList.contains('hidden') ? 'menu' : 'close';
+});
+</script>
+<main class="pt-32 pb-24 px-6 md:px-12 lg:px-24 max-w-7xl mx-auto">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24 items-start">
+<div class="lg:col-span-7 space-y-12">
+<header>
+<span class="font-label text-sm uppercase tracking-[0.2em] text-secondary font-bold block mb-4">BOOKINGFORESPØRSEL</span>
+<h1 class="font-headline text-5xl md:text-7xl font-light tracking-tight text-on-background leading-none">EMIL- og Smørekoppenhytta — <span class="italic">Soknedalens Riviera</span></h1>
+</header>
+<section class="bg-surface-container-low rounded-lg p-8 md:p-12">
+<div class="flex items-center justify-between mb-8">
+<h2 class="font-headline text-2xl" id="cal-title"></h2>
+<div class="flex space-x-4">
+<button id="cal-prev" class="p-2 hover:bg-surface-container-high rounded-full transition-colors">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button id="cal-next" class="p-2 hover:bg-surface-container-high rounded-full transition-colors">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+<div class="grid grid-cols-7 gap-2 text-center text-sm mb-4">
+<div class="font-label opacity-50 font-bold">MAN</div>
+<div class="font-label opacity-50 font-bold">TIR</div>
+<div class="font-label opacity-50 font-bold">ONS</div>
+<div class="font-label opacity-50 font-bold">TOR</div>
+<div class="font-label opacity-50 font-bold">FRE</div>
+<div class="font-label opacity-50 font-bold">LØR</div>
+<div class="font-label opacity-50 font-bold">SØN</div>
+</div>
+<div id="cal-grid" class="grid grid-cols-7 gap-1"></div>
+<p id="cal-selection" class="mt-4 text-sm text-secondary font-label font-bold text-center min-h-[1.5rem]"></p>
+</section>
+<form id="booking-form" class="space-y-8" name="booking" data-netlify="true">
+<input type="hidden" name="form-name" value="booking"/>
+<input type="hidden" id="hidden-periode" name="periode"/>
+<input type="hidden" id="hidden-gjester" name="antall_gjester"/>
+<input type="hidden" id="hidden-pris" name="beregnet_pris"/>
+
+<h2 class="font-headline text-3xl">Gjesteinformasjon</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="space-y-2">
+<label class="font-label text-xs uppercase tracking-widest text-secondary font-bold">Fornavn</label>
+<input name="fornavn" required class="w-full bg-surface-container-high border-none p-4 rounded-lg focus:ring-1 focus:ring-primary focus:bg-surface-container-highest transition-all outline-none" placeholder="Ola" type="text"/>
+</div>
+<div class="space-y-2">
+<label class="font-label text-xs uppercase tracking-widest text-secondary font-bold">Etternavn</label>
+<input name="etternavn" required class="w-full bg-surface-container-high border-none p-4 rounded-lg focus:ring-1 focus:ring-primary focus:bg-surface-container-highest transition-all outline-none" placeholder="Nordmann" type="text"/>
+</div>
+<div class="space-y-2 md:col-span-2">
+<label class="font-label text-xs uppercase tracking-widest text-secondary font-bold">E-postadresse</label>
+<input name="epost" required class="w-full bg-surface-container-high border-none p-4 rounded-lg focus:ring-1 focus:ring-primary focus:bg-surface-container-highest transition-all outline-none" placeholder="ola@example.com" type="email"/>
+</div>
+<div class="space-y-2 md:col-span-2">
+<label class="font-label text-xs uppercase tracking-widest text-secondary font-bold">Telefonnummer</label>
+<input name="telefon" class="w-full bg-surface-container-high border-none p-4 rounded-lg focus:ring-1 focus:ring-primary focus:bg-surface-container-highest transition-all outline-none" placeholder="+47 000 00 000" type="tel"/>
+</div>
+<div class="space-y-2 md:col-span-2">
+<label class="font-label text-xs uppercase tracking-widest text-secondary font-bold">Type gjest</label>
+<select id="guest-type" name="type_gjest" required class="w-full bg-surface-container-high border-none p-4 rounded-lg focus:ring-1 focus:ring-primary focus:bg-surface-container-highest transition-all outline-none">
+<option value="">Velg...</option>
+<option value="intern">Intern (EMIL eller Smørekoppen)</option>
+<option value="ekstern">Ekstern</option>
+</select>
+</div>
+<div class="space-y-2 md:col-span-2">
+<label class="font-label text-xs uppercase tracking-widest text-secondary font-bold">Kommentar (valgfritt)</label>
+<textarea name="kommentar" class="w-full bg-surface-container-high border-none p-4 rounded-lg focus:ring-1 focus:ring-primary focus:bg-surface-container-highest transition-all outline-none h-28" placeholder="Antall gjester, ønsker, spørsmål..."></textarea>
+</div>
+</div>
+
+<div id="price-box" class="hidden mt-4 p-5 bg-primary rounded-lg text-on-primary space-y-2">
+<p class="font-label text-xs uppercase tracking-widest opacity-70">Beregnet pris</p>
+<p id="price-details" class="text-sm opacity-80"></p>
+<p id="price-total" class="font-headline text-3xl"></p>
+<p class="text-xs opacity-60 italic">Endelig pris bekreftes av hovmester</p>
+</div>
+<div id="form-error" class="hidden p-4 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm font-label"></div>
+<button type="submit" id="submit-btn" class="w-full bg-gradient-to-br from-primary to-primary-container text-on-primary py-5 rounded-full font-label font-bold text-sm uppercase tracking-[0.2em] shadow-xl shadow-primary/10 hover:opacity-90 transition-all flex items-center justify-center group">
+  Send Bookingforespørsel
+  <span class="material-symbols-outlined ml-3 text-lg group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+<p class="text-center text-xs text-on-surface-variant font-label italic">
+  Ingen betaling kreves nå. Vi vil behandle forespørselen din innen 24 timer.
+</p>
+</form>
+</div>
+<aside class="lg:col-span-5 sticky top-32">
+<div class="bg-surface-container-low rounded-lg overflow-hidden flex flex-col">
+<div class="relative h-64">
+<img class="w-full h-full object-cover" data-alt="high-end modern cabin interior with floor to ceiling windows overlooking misty forest at dusk with warm accent lighting" src="Bilder av hytta/IMG_0891.JPG"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/60 to-transparent"></div>
+<div class="absolute bottom-6 left-8">
+<span class="text-white font-headline text-2xl">EMIL- og Smørekoppenhytta</span>
+<div class="flex items-center text-white/80 text-sm mt-1">
+<span class="material-symbols-outlined text-sm mr-2">location_on</span>
+<span>Skogsveien 652, 7288 Soknedal</span>
+</div>
+</div>
+</div>
+<div class="p-8 md:p-10 space-y-8">
+<div class="space-y-6">
+<div class="flex justify-between items-center">
+<span class="font-label text-sm uppercase tracking-wider text-on-surface-variant">Antall gjester</span>
+<div class="flex items-center space-x-4">
+<button id="guests-dec" class="w-8 h-8 rounded-full border border-outline-variant flex items-center justify-center hover:bg-surface-container-high transition-colors">-</button>
+<span id="guests-count" class="font-body font-bold w-6 text-center">10</span>
+<button id="guests-inc" class="w-8 h-8 rounded-full border border-outline-variant flex items-center justify-center hover:bg-surface-container-high transition-colors">+</button>
+</div>
+</div>
+</div>
+<div class="h-px bg-outline-variant/30"></div>
+<div class="space-y-3 text-sm">
+<p class="font-label text-xs uppercase tracking-widest text-secondary font-bold mb-3">Undervisningsperiode</p>
+<div class="flex justify-between text-on-surface-variant">
+<span>Interne — helg (min. 10 pers)</span>
+<span class="font-bold text-on-surface">Kr 2 500–6 250</span>
+</div>
+<div class="flex justify-between text-on-surface-variant">
+<span>Interne — ukedag (per pers)</span>
+<span class="font-bold text-on-surface">Max kr 3 125</span>
+</div>
+<div class="flex justify-between text-on-surface-variant">
+<span>Eksterne — helg (hele hytta)</span>
+<span class="font-bold text-on-surface">Kr 12 500</span>
+</div>
+<div class="flex justify-between text-on-surface-variant">
+<span>Eksterne — ukedag (min. 10 pers)</span>
+<span class="font-bold text-on-surface">Kr 2 500–6 250</span>
+</div>
+<div class="h-px bg-outline-variant/30 my-2"></div>
+<p class="font-label text-xs uppercase tracking-widest text-secondary font-bold mb-3">Eksamen &amp; Ferie</p>
+<div class="flex justify-between text-on-surface-variant">
+<span>Interne — helg/ukedag (per pers)</span>
+<span class="font-bold text-on-surface">Max kr 3 125</span>
+</div>
+<div class="flex justify-between text-on-surface-variant">
+<span>Eksterne — helg (min. 10 pers)</span>
+<span class="font-bold text-on-surface">Kr 5 000–12 500</span>
+</div>
+<div class="flex justify-between text-on-surface-variant">
+<span>Eksterne — ukedag (min. 10 pers)</span>
+<span class="font-bold text-on-surface">Kr 2 500–6 250</span>
+</div>
+<div class="flex justify-between font-headline text-xl pt-3 border-t border-outline-variant/30">
+<span>Kontakt for endelig pris</span>
+<a href="mailto:hovmester@eshyttekom.no" class="text-secondary underline text-sm font-label">hovmester@</a>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-8 bg-secondary-fixed/30 rounded-lg p-6 flex items-start space-x-4">
+<span class="material-symbols-outlined text-on-secondary-fixed-variant">eco</span>
+<div>
+<h4 class="font-label font-bold text-sm text-on-secondary-fixed mb-1 uppercase tracking-wider">MILJØVENNLIG OPPHOLD</h4>
+<p class="text-xs text-on-secondary-fixed-variant leading-relaxed">Hytta forvaltes av Hyttestyret og HytteComitéen med fokus på bærekraftig drift og dugnadsånd.</p>
+</div>
+</div>
+</aside>
+</div>
+<section class="mt-24 pt-12 border-t border-outline-variant/20">
+<h3 class="font-headline text-2xl mb-8">Bookingvilkår</h3>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-12 text-sm text-on-surface-variant leading-relaxed font-label">
+<div class="space-y-4">
+<p class="font-bold text-secondary tracking-widest uppercase">AVBESTILLING</p>
+<p>Kontakt hovmester@eshyttekom.no for avbestilling. Se bookingbekreftelsen for gjeldende betingelser.</p>
+</div>
+<div class="space-y-4">
+<p class="font-bold text-secondary tracking-widest uppercase">INNSJEKK/UTSJEKK</p>
+<p>Innsjekk fra kl. 14:00. Utsjekk innen kl. 11:00. Kode til nøkkelboks sendes 24 timer før ankomst.</p>
+</div>
+<div class="space-y-4">
+<p class="font-bold text-secondary tracking-widest uppercase">HUSREGLER</p>
+<p>Røyking er ikke tillatt innendørs. Respekter naboer og ro etter kl. 22:00. Hytta skal forlates ryddig.</p>
+</div>
+</div>
+</section>
+</main>
+<footer class="w-full py-12 px-8 bg-stone-100 dark:bg-stone-950">
+<div class="flex flex-col md:flex-row justify-between items-center gap-8 w-full max-w-7xl mx-auto">
+<div class="flex flex-col items-center md:items-start gap-2">
+<span class="font-serif italic text-xl text-stone-800 dark:text-stone-200">Hyttekom</span>
+<p class="font-sans text-sm uppercase tracking-widest text-emerald-950 dark:text-emerald-200 opacity-60">© 2025 Emil &amp; Smørekoppen. Alle rettigheter forbeholdt.</p>
+</div>
+<div class="flex gap-8 font-sans text-sm uppercase tracking-widest">
+<a class="text-stone-500 dark:text-stone-400 hover:text-emerald-700 dark:hover:text-emerald-300 transition-all" href="#">Vilkår for Bruk</a>
+<a class="text-stone-500 dark:text-stone-400 hover:text-emerald-700 dark:hover:text-emerald-300 transition-all" href="#">Personvernpolicy</a>
+<a class="text-stone-500 dark:text-stone-400 hover:text-emerald-700 dark:hover:text-emerald-300 transition-all" href="#">Kontakt Oss</a>
+</div>
+</div>
+</footer>
+<script>
+// ── Supabase konfig (bytt ut med dine verdier) ────────────────────────────
+const SUPABASE_URL      = 'https://fkkjhlzpzisgneuphnse.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZra2pobHpwemlzZ25ldXBobnNlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUxNTQxMDcsImV4cCI6MjA5MDczMDEwN30.Ah6m-RiNYm_rWkaFdxDgPksWTYpsZa1XweE2rFhZhQo';
+
+// ── Kalender ──────────────────────────────────────────────────────────────
+const MONTHS = ['Januar','Februar','Mars','April','Mai','Juni',
+                'Juli','August','September','Oktober','November','Desember'];
+
+let viewYear  = new Date().getFullYear();
+let viewMonth = new Date().getMonth(); // 0-indexed
+let startDate = null;
+let endDate   = null;
+
+function toKey(y, m, d) { return `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`; }
+function keyToDate(k)   { const [y,m,d] = k.split('-'); return new Date(+y, +m-1, +d); }
+
+// Bookinger lastet fra Supabase
+let bookedePerioder = [];
+
+async function lastBookinger() {
+  try {
+    const res = await fetch(
+      `${SUPABASE_URL}/rest/v1/bookinger?select=fra_dato,til_dato&status=eq.confirmed`,
+      { headers: { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}` } }
+    );
+    if (res.ok) {
+      bookedePerioder = await res.json();
+    }
+  } catch (e) {
+    console.warn('Kunne ikke laste bookinger:', e);
+  }
+  renderCalendar();
+}
+
+function isBooked(key) {
+  const d = keyToDate(key);
+  // Sjekk Supabase-bookinger
+  const fraSupabase = bookedePerioder.some(p => {
+    if (!p.fra_dato || !p.til_dato) return false;
+    return d >= keyToDate(p.fra_dato) && d <= keyToDate(p.til_dato);
+  });
+  // Sjekk manuell bookinger.js
+  const fraFil = (BOOKEDE_PERIODER || []).some(p => {
+    return d >= keyToDate(p.fra) && d <= keyToDate(p.til);
+  });
+  return fraSupabase || fraFil;
+}
+
+function renderCalendar() {
+  const title = document.getElementById('cal-title');
+  const grid  = document.getElementById('cal-grid');
+  const sel   = document.getElementById('cal-selection');
+
+  title.textContent = `${MONTHS[viewMonth]} ${viewYear}`;
+  grid.innerHTML = '';
+
+  const today    = new Date(); today.setHours(0,0,0,0);
+  const firstDay = new Date(viewYear, viewMonth, 1);
+  // Monday=0 offset
+  let offset = (firstDay.getDay() + 6) % 7;
+  const daysInMonth  = new Date(viewYear, viewMonth+1, 0).getDate();
+  const daysInPrev   = new Date(viewYear, viewMonth, 0).getDate();
+
+  const startKey = startDate ? toKey(startDate.getFullYear(), startDate.getMonth(), startDate.getDate()) : null;
+  const endKey   = endDate   ? toKey(endDate.getFullYear(),   endDate.getMonth(),   endDate.getDate())   : null;
+
+  // prev-month padding
+  for (let i = offset - 1; i >= 0; i--) {
+    const d = document.createElement('div');
+    d.className = 'h-14 flex items-center justify-center text-on-surface-variant opacity-20 text-sm';
+    d.textContent = daysInPrev - i;
+    grid.appendChild(d);
+  }
+
+  for (let day = 1; day <= daysInMonth; day++) {
+    const d    = document.createElement('div');
+    const date = new Date(viewYear, viewMonth, day);
+    const key  = toKey(viewYear, viewMonth, day);
+    const isPast = date < today;
+
+    let cls = 'h-14 flex items-center justify-center rounded-lg text-sm font-body transition-colors ';
+
+    const booked = isBooked(key);
+
+    if (isPast) {
+      cls += 'opacity-25 cursor-not-allowed';
+    } else if (booked) {
+      cls += 'bg-red-100 text-red-600 line-through cursor-not-allowed font-semibold';
+    } else if (key === startKey || key === endKey) {
+      cls += 'bg-primary text-on-primary font-bold cursor-pointer';
+    } else if (startKey && endKey && key > startKey && key < endKey) {
+      cls += 'bg-primary-container text-on-primary-container cursor-pointer';
+    } else {
+      cls += 'hover:bg-surface-container-high cursor-pointer';
+    }
+
+    d.className   = cls;
+    d.textContent = day;
+
+    if (!isPast && !booked) {
+      d.addEventListener('click', () => handleDayClick(viewYear, viewMonth, day));
+    }
+    grid.appendChild(d);
+  }
+
+  // next-month padding to complete last row
+  const total = offset + daysInMonth;
+  const remaining = total % 7 === 0 ? 0 : 7 - (total % 7);
+  for (let i = 1; i <= remaining; i++) {
+    const d = document.createElement('div');
+    d.className = 'h-14 flex items-center justify-center text-on-surface-variant opacity-20 text-sm';
+    d.textContent = i;
+    grid.appendChild(d);
+  }
+
+  // Update selection label
+  if (startDate && endDate) {
+    const fmt = d => `${d.getDate()}. ${MONTHS[d.getMonth()]} ${d.getFullYear()}`;
+    sel.textContent = `Valgt periode: ${fmt(startDate)} → ${fmt(endDate)}`;
+  } else if (startDate) {
+    const fmt = d => `${d.getDate()}. ${MONTHS[d.getMonth()]}`;
+    sel.textContent = `Innsjekk: ${fmt(startDate)} — velg utsjekk`;
+  } else {
+    sel.textContent = '';
+  }
+}
+
+function rangeHasBookedDates(start, end) {
+  let d = new Date(start);
+  while (d <= end) {
+    const k = toKey(d.getFullYear(), d.getMonth(), d.getDate());
+    if (isBooked(k)) return true;
+    d.setDate(d.getDate() + 1);
+  }
+  return false;
+}
+
+function handleDayClick(y, m, day) {
+  const clicked = new Date(y, m, day);
+  if (!startDate || (startDate && endDate)) {
+    startDate = clicked;
+    endDate   = null;
+  } else {
+    if (clicked <= startDate) {
+      startDate = clicked;
+      endDate   = null;
+    } else if (rangeHasBookedDates(startDate, clicked)) {
+      // Periode krysser opptatte dager — start på nytt
+      startDate = clicked;
+      endDate   = null;
+      document.getElementById('cal-selection').textContent = 'Perioden inneholder opptatte dager. Velg ny innsjekk.';
+    } else {
+      endDate = clicked;
+    }
+  }
+  renderCalendar();
+  updatePrice();
+}
+
+document.getElementById('cal-prev').addEventListener('click', () => {
+  viewMonth--;
+  if (viewMonth < 0) { viewMonth = 11; viewYear--; }
+  renderCalendar();
+});
+document.getElementById('cal-next').addEventListener('click', () => {
+  viewMonth++;
+  if (viewMonth > 11) { viewMonth = 0; viewYear++; }
+  renderCalendar();
+});
+
+// ── Gjestekounter ─────────────────────────────────────────────────────────
+let guests = 10;
+const countEl = document.getElementById('guests-count');
+
+document.getElementById('guests-inc').addEventListener('click', () => {
+  if (guests < 48) { guests++; countEl.textContent = guests; updatePrice(); }
+});
+document.getElementById('guests-dec').addEventListener('click', () => {
+  if (guests > 1) { guests--; countEl.textContent = guests; updatePrice(); }
+});
+
+document.getElementById('guest-type').addEventListener('change', updatePrice);
+
+// ── Prisberegning ──────────────────────────────────────────────────────────
+function isWeekendPeriod(start, end) {
+  // Returns true if the period includes a Friday, Saturday or Sunday
+  let d = new Date(start);
+  while (d <= end) {
+    if (d.getDay() === 5 || d.getDay() === 6 || d.getDay() === 0) return true;
+    d.setDate(d.getDate() + 1);
+  }
+  return false;
+}
+
+function updatePrice() {
+  const box     = document.getElementById('price-box');
+  const details = document.getElementById('price-details');
+  const total   = document.getElementById('price-total');
+  const type    = document.getElementById('guest-type').value;
+
+  if (!startDate || !endDate || !type) { box.classList.add('hidden'); return; }
+
+  const nights  = Math.round((endDate - startDate) / 86400000);
+  const weekend = isWeekendPeriod(startDate, endDate);
+  let pris = 0;
+  let desc = '';
+
+  if (type === 'intern') {
+    if (weekend) {
+      // 250 kr/person, min 2500, max 6250
+      pris = Math.min(Math.max(guests * 250, 2500), 6250);
+      desc = `Intern helg · ${guests} pers × 250 kr (min 2 500, max 6 250)`;
+    } else {
+      // 125 kr/person/natt, max 3125/natt
+      const perNight = Math.min(guests * 125, 3125);
+      pris = perNight * nights;
+      desc = `Intern ukedag · ${guests} pers × 125 kr × ${nights} natt${nights>1?'er':''}`;
+    }
+  } else {
+    if (weekend) {
+      // Flat 12500 kr
+      pris = 12500;
+      desc = `Ekstern helg · flat pris`;
+    } else {
+      // 250 kr/person/natt, min 2500, max 6250/natt
+      const perNight = Math.min(Math.max(guests * 250, 2500), 6250);
+      pris = perNight * nights;
+      desc = `Ekstern ukedag · ${guests} pers × 250 kr × ${nights} natt${nights>1?'er':''}`;
+    }
+  }
+
+  details.textContent = desc;
+  total.textContent   = `Kr ${pris.toLocaleString('nb-NO')}`;
+  box.classList.remove('hidden');
+}
+
+// ── Skjema-innsending via Netlify Function → Supabase ─────────────────────
+document.getElementById('booking-form').addEventListener('submit', async function(e) {
+  e.preventDefault();
+
+  const btn = document.getElementById('submit-btn');
+  const errBox = document.getElementById('form-error');
+  btn.disabled = true;
+  btn.textContent = 'Sender…';
+  errBox.classList.add('hidden');
+
+  const fmt = d => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+
+  const payload = {
+    fornavn:        document.querySelector('[name="fornavn"]').value.trim(),
+    etternavn:      document.querySelector('[name="etternavn"]').value.trim(),
+    epost:          document.querySelector('[name="epost"]').value.trim(),
+    telefon:        document.querySelector('[name="telefon"]').value.trim(),
+    type_gjest:     document.querySelector('[name="type_gjest"]').value,
+    fra_dato:       startDate ? fmt(startDate) : null,
+    til_dato:       endDate   ? fmt(endDate)   : null,
+    antall_gjester: guests,
+    beregnet_pris:  document.getElementById('price-total').textContent || null,
+    kommentar:      document.querySelector('[name="kommentar"]').value.trim(),
+  };
+
+  try {
+    const res = await fetch('/api/booking', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+
+    if (res.ok) {
+      // Send også til Netlify Forms for e-postvarsling
+      const formData = new FormData();
+      formData.append('form-name', 'booking');
+      formData.append('fornavn', payload.fornavn);
+      formData.append('etternavn', payload.etternavn);
+      formData.append('epost', payload.epost);
+      formData.append('telefon', payload.telefon || '');
+      formData.append('type_gjest', payload.type_gjest);
+      formData.append('periode', payload.fra_dato && payload.til_dato ? `${payload.fra_dato} → ${payload.til_dato}` : '');
+      formData.append('antall_gjester', payload.antall_gjester);
+      formData.append('beregnet_pris', payload.beregnet_pris || '');
+      formData.append('kommentar', payload.kommentar || '');
+      await fetch('/', { method: 'POST', body: formData }).catch(() => {});
+      window.location.href = 'takk.html';
+    } else {
+      const txt = await res.text();
+      errBox.textContent = 'Noe gikk galt: ' + txt;
+      errBox.classList.remove('hidden');
+      btn.disabled = false;
+      btn.innerHTML = 'Send Bookingforespørsel <span class="material-symbols-outlined ml-3 text-lg">arrow_forward</span>';
+    }
+  } catch {
+    errBox.textContent = 'Nettverksfeil — prøv igjen eller kontakt oss på hovmester@eshyttekom.no';
+    errBox.classList.remove('hidden');
+    btn.disabled = false;
+    btn.innerHTML = 'Send Bookingforespørsel <span class="material-symbols-outlined ml-3 text-lg">arrow_forward</span>';
+  }
+});
+
+// ── Init ──────────────────────────────────────────────────────────────────
+renderCalendar();
+lastBookinger();
+</script>
+</body></html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html class="light" lang="no">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Takk for din forespørsel | Hyttekom</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Manrope:wght@200..800&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "primary": "#182519",
+          "secondary": "#785833",
+          "background": "#fbf9f4",
+          "surface-container-low": "#f5f3ee",
+          "surface-container-high": "#eae8e3",
+          "on-primary": "#ffffff",
+          "on-background": "#1b1c19",
+          "on-surface-variant": "#444842",
+          "primary-container": "#2d3b2d",
+          "on-primary-container": "#95a593",
+          "outline-variant": "#c4c8c0",
+        },
+        fontFamily: {
+          "headline": ["Newsreader"],
+          "body": ["Manrope"],
+          "label": ["Manrope"]
+        },
+        borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+      },
+    },
+  }
+</script>
+<style>
+  body { font-family: 'Manrope', sans-serif; background-color: #fbf9f4; color: #1b1c19; }
+  .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+</style>
+</head>
+<body class="bg-background text-on-background antialiased">
+
+<nav class="fixed top-0 w-full z-50 bg-stone-50/80 backdrop-blur-md">
+  <div class="flex justify-between items-center px-8 py-6 max-w-7xl mx-auto">
+    <a class="font-serif text-2xl tracking-tighter text-emerald-900" href="index.html">Hyttekom</a>
+    <div class="hidden md:flex items-center space-x-10 font-serif tracking-tight text-lg">
+      <a class="text-stone-600 font-medium hover:text-emerald-800 transition-colors duration-300" href="index.html">Hjem</a>
+      <a class="text-stone-600 font-medium hover:text-emerald-800 transition-colors duration-300" href="fasiliteter.html">Fasiliteter</a>
+      <a class="text-stone-600 font-medium hover:text-emerald-800 transition-colors duration-300" href="bildegalleri.html">Galleri</a>
+      <a class="text-stone-600 font-medium hover:text-emerald-800 transition-colors duration-300" href="booking.html">Bestill</a>
+      <a class="text-stone-600 font-medium hover:text-emerald-800 transition-colors duration-300" href="om-oss.html">Om Oss</a>
+    </div>
+    <a href="booking.html" class="hidden md:inline-flex bg-primary text-on-primary px-6 py-2 rounded-full font-body text-sm font-semibold hover:bg-primary-container transition-colors">Reserver</a>
+    <button id="mobile-menu-btn" class="md:hidden p-2 text-emerald-900" aria-label="Meny"><span class="material-symbols-outlined">menu</span></button>
+  </div>
+  <div id="mobile-menu" class="hidden absolute top-full left-0 w-full bg-stone-50/95 backdrop-blur-md border-t border-stone-200 py-6 px-8 flex flex-col space-y-4">
+    <a class="font-serif text-lg text-stone-700 hover:text-emerald-800 transition-colors" href="index.html">Hjem</a>
+    <a class="font-serif text-lg text-stone-700 hover:text-emerald-800 transition-colors" href="fasiliteter.html">Fasiliteter</a>
+    <a class="font-serif text-lg text-stone-700 hover:text-emerald-800 transition-colors" href="bildegalleri.html">Galleri</a>
+    <a class="font-serif text-lg text-stone-700 hover:text-emerald-800 transition-colors" href="booking.html">Bestill</a>
+    <a class="font-serif text-lg text-stone-700 hover:text-emerald-800 transition-colors" href="om-oss.html">Om Oss</a>
+    <a href="booking.html" class="bg-primary text-on-primary px-6 py-3 rounded-full font-body font-semibold text-sm text-center">Reserver</a>
+  </div>
+</nav>
+<script>
+document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+  const menu = document.getElementById('mobile-menu');
+  menu.classList.toggle('hidden');
+  this.querySelector('.material-symbols-outlined').textContent = menu.classList.contains('hidden') ? 'menu' : 'close';
+});
+</script>
+
+<main class="min-h-screen flex items-center justify-center px-8 pt-24 pb-24">
+  <div class="max-w-2xl w-full text-center space-y-10">
+    <div class="w-20 h-20 bg-primary rounded-full flex items-center justify-center mx-auto shadow-2xl">
+      <span class="material-symbols-outlined text-on-primary text-4xl" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+    </div>
+
+    <div class="space-y-4">
+      <span class="font-label text-secondary text-sm font-bold tracking-widest uppercase block">Forespørsel mottatt</span>
+      <h1 class="font-headline text-5xl md:text-7xl text-primary leading-none tracking-tighter italic">Tusen takk!</h1>
+      <p class="font-body text-xl text-on-surface-variant leading-relaxed max-w-lg mx-auto">
+        Din bookingforespørsel er sendt. Hovmester vil behandle den og komme tilbake til deg innen <strong>24 timer</strong>.
+      </p>
+    </div>
+
+    <div class="bg-surface-container-low rounded-lg p-8 text-left space-y-4">
+      <h2 class="font-headline text-xl">Hva skjer nå?</h2>
+      <ol class="space-y-3 text-on-surface-variant font-body text-sm">
+        <li class="flex items-start gap-3">
+          <span class="font-bold text-secondary mt-0.5 w-5 shrink-0">1.</span>
+          Hovmester går gjennom forespørselen din og sjekker tilgjengelighet.
+        </li>
+        <li class="flex items-start gap-3">
+          <span class="font-bold text-secondary mt-0.5 w-5 shrink-0">2.</span>
+          Du mottar en e-post med bekreftelse og endelig pris.
+        </li>
+        <li class="flex items-start gap-3">
+          <span class="font-bold text-secondary mt-0.5 w-5 shrink-0">3.</span>
+          Ved godkjennelse mottar du kode til nøkkelboks 24 timer før ankomst.
+        </li>
+      </ol>
+    </div>
+
+    <p class="text-sm text-on-surface-variant font-label">
+      Spørsmål? Kontakt oss på
+      <a href="mailto:hovmester@eshyttekom.no" class="underline hover:text-primary transition-colors">hovmester@eshyttekom.no</a>
+    </p>
+
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      <a href="index.html" class="bg-primary text-on-primary px-8 py-4 rounded-full font-label text-sm font-bold uppercase tracking-widest hover:bg-primary-container transition-all">
+        Tilbake til forsiden
+      </a>
+      <a href="bildegalleri.html" class="px-8 py-4 rounded-full font-label text-sm font-bold uppercase tracking-widest border border-outline-variant hover:bg-surface-container-low transition-all">
+        Se galleriet
+      </a>
+    </div>
+  </div>
+</main>
+
+<footer class="bg-stone-100 w-full py-12 px-8">
+  <div class="flex flex-col md:flex-row justify-between items-center gap-8 w-full max-w-7xl mx-auto">
+    <div class="font-serif italic text-xl text-stone-800">Hyttekom</div>
+    <div class="flex flex-wrap justify-center gap-8 font-sans text-sm uppercase tracking-widest text-stone-500">
+      <a class="hover:text-emerald-700 transition-all" href="#">Vilkår for Bruk</a>
+      <a class="hover:text-emerald-700 transition-all" href="#">Personvernpolicy</a>
+      <a class="hover:text-emerald-700 transition-all" href="mailto:kommunikasjonssjef@eshyttekom.no">Kontakt Oss</a>
+    </div>
+    <div class="font-sans text-xs uppercase tracking-widest text-stone-400">
+      © 2025 Emil &amp; Smørekoppen. Alle rettigheter forbeholdt.
+    </div>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+
+<html class="light" lang="no"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Om Oss | Hyttekom</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;family=Manrope:wght@200..800&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-error": "#ffffff",
+                        "surface-container-highest": "#e4e2dd",
+                        "error-container": "#ffdad6",
+                        "on-primary-fixed": "#111f12",
+                        "primary": "#182519",
+                        "secondary": "#785833",
+                        "background": "#fbf9f4",
+                        "surface-container-high": "#eae8e3",
+                        "tertiary-container": "#423528",
+                        "surface-variant": "#e4e2dd",
+                        "on-primary": "#ffffff",
+                        "surface-bright": "#fbf9f4",
+                        "inverse-on-surface": "#f2f1ec",
+                        "primary-container": "#2d3b2d",
+                        "on-tertiary": "#ffffff",
+                        "outline-variant": "#c4c8c0",
+                        "on-tertiary-container": "#b09e8c",
+                        "on-secondary-fixed": "#2b1700",
+                        "on-error-container": "#93000a",
+                        "surface": "#fbf9f4",
+                        "on-secondary-fixed-variant": "#5e411e",
+                        "on-secondary-container": "#795933",
+                        "on-background": "#1b1c19",
+                        "on-primary-container": "#95a593",
+                        "primary-fixed": "#d7e7d3",
+                        "surface-container-low": "#f5f3ee",
+                        "on-tertiary-fixed": "#241a0e",
+                        "outline": "#747872",
+                        "on-tertiary-fixed-variant": "#524436",
+                        "inverse-surface": "#30312e",
+                        "secondary-fixed": "#ffddb9",
+                        "on-surface-variant": "#444842",
+                        "error": "#ba1a1a",
+                        "tertiary-fixed-dim": "#d7c3b0",
+                        "surface-container": "#f0eee9",
+                        "surface-dim": "#dbdad5",
+                        "inverse-primary": "#bbcbb8",
+                        "surface-container-lowest": "#ffffff",
+                        "on-surface": "#1b1c19",
+                        "tertiary-fixed": "#f4dfcb",
+                        "on-secondary": "#ffffff",
+                        "primary-fixed-dim": "#bbcbb8",
+                        "secondary-container": "#fed2a3",
+                        "secondary-fixed-dim": "#e9bf91",
+                        "tertiary": "#2b2014",
+                        "surface-tint": "#536252",
+                        "on-primary-fixed-variant": "#3c4a3c"
+                    },
+                    fontFamily: {
+                        "headline": ["Newsreader"],
+                        "body": ["Manrope"],
+                        "label": ["Manrope"]
+                    },
+                    borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Manrope', sans-serif; }
+        h1, h2, h3, .font-serif { font-family: 'Newsreader', serif; }
+        .bg-cedar-gradient {
+            background: linear-gradient(45deg, #182519 0%, #2d3b2d 100%);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background selection:bg-secondary-container selection:text-on-secondary-container">
+<!-- TopNavBar Component -->
+<nav class="fixed top-0 w-full z-50 bg-stone-50/80 dark:bg-stone-900/80 backdrop-blur-md">
+<div class="flex justify-between items-center px-8 py-6 max-w-7xl mx-auto">
+<a class="font-serif text-2xl tracking-tighter text-emerald-900 dark:text-emerald-500" href="index.html">Hyttekom</a>
+<div class="hidden md:flex items-center gap-10">
+<a class="text-stone-600 dark:text-stone-400 font-medium hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors duration-300" href="index.html">Hjem</a>
+<a class="text-stone-600 dark:text-stone-400 font-medium hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors duration-300" href="fasiliteter.html">Fasiliteter</a>
+<a class="text-stone-600 dark:text-stone-400 font-medium hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors duration-300" href="bildegalleri.html">Galleri</a>
+<a class="text-stone-600 dark:text-stone-400 font-medium hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors duration-300" href="booking.html">Bestill</a>
+<a class="text-emerald-900 dark:text-emerald-400 border-b-2 border-emerald-900 dark:border-emerald-400 pb-1 font-medium" href="om-oss.html">Om Oss</a>
+</div>
+<div class="flex items-center gap-6">
+<a href="booking.html" class="hidden md:inline-flex bg-cedar-gradient text-on-primary px-6 py-2 rounded-full font-medium hover:opacity-90 transition-opacity">Reserver</a>
+<button id="mobile-menu-btn" class="md:hidden p-2 text-emerald-900" aria-label="Meny"><span class="material-symbols-outlined">menu</span></button>
+</div>
+</div>
+<div id="mobile-menu" class="hidden absolute top-full left-0 w-full bg-stone-50/95 backdrop-blur-md border-t border-stone-200 py-6 px-8 flex flex-col space-y-4">
+<a class="font-serif text-lg text-stone-700 hover:text-emerald-800 transition-colors" href="index.html">Hjem</a>
+<a class="font-serif text-lg text-stone-700 hover:text-emerald-800 transition-colors" href="fasiliteter.html">Fasiliteter</a>
+<a class="font-serif text-lg text-stone-700 hover:text-emerald-800 transition-colors" href="bildegalleri.html">Galleri</a>
+<a class="font-serif text-lg text-stone-700 hover:text-emerald-800 transition-colors" href="booking.html">Bestill</a>
+<a class="font-serif text-lg text-stone-700 hover:text-emerald-800 transition-colors" href="om-oss.html">Om Oss</a>
+<a href="booking.html" class="bg-primary text-on-primary px-6 py-3 rounded-full font-medium text-sm text-center">Reserver</a>
+</div>
+</nav>
+<script>
+document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+  const menu = document.getElementById('mobile-menu');
+  menu.classList.toggle('hidden');
+  this.querySelector('.material-symbols-outlined').textContent = menu.classList.contains('hidden') ? 'menu' : 'close';
+});
+</script>
+<main class="pt-32">
+<!-- Hero Section -->
+<section class="px-8 max-w-7xl mx-auto mb-24">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-end">
+<div class="md:col-span-8">
+<span class="font-label text-secondary uppercase tracking-[0.2rem] text-sm mb-4 block">Vår Arv</span>
+<h1 class="text-6xl md:text-8xl font-serif text-primary leading-tight tracking-tighter">Et Felles Arnested for <span class="italic text-secondary">Emil &amp; Smørekoppen</span></h1>
+</div>
+<div class="md:col-span-4 pb-4">
+<p class="text-on-surface-variant text-lg leading-relaxed border-l border-outline-variant pl-6">
+                        Born from the collaborative spirit of Trondheim’s brightest minds, Hyttekom is more than a retreat—it is a legacy of brotherhood and craftsmanship.
+                    </p>
+</div>
+</div>
+</section>
+<!-- Asymmetric Image Story -->
+<section class="px-8 max-w-7xl mx-auto mb-32">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+<div class="relative">
+<div class="aspect-[4/5] bg-surface-container overflow-hidden rounded-lg">
+<img alt="vintage moody photography of students gathered around a warm wooden table in a dimly lit rustic cabin cabin with snow outside" class="w-full h-full object-cover" src="Bilder av hytta/IMG_0865.JPG"/>
+</div>
+</div>
+<div class="space-y-8">
+<h2 class="text-4xl font-serif text-primary italic">Møtet mellom Ingeniørkunst &amp; Ånd</h2>
+<div class="space-y-6 text-on-surface-variant leading-relaxed font-body">
+<p>
+                            EMIL- og Smørekoppenhytta er Energi og Miljø- og Maskiningeniørenes hytte som ligger litt ovenfor Soknedal sentrum, bare 59 minutter fra Gløshaugens hjerte. Hytta kan leies via bookingsiden eller ved kontakt til hovmester@eshyttekom.no.
+                        </p>
+<p>
+                            Hytta har 7 soverom med plass til 48 gjester. Driften forvaltes av Hyttestyret og HytteComitéen som arrangerer dugnader og er ansvarlige for vedlikehold og driftsspørsmål. Følg hytta på Instagram: @eshyttekom
+                        </p>
+</div>
+<div class="pt-4 flex gap-8 border-t border-outline-variant/30">
+<div class="flex flex-col">
+<span class="font-serif text-2xl text-primary">Emil</span>
+<span class="text-xs uppercase tracking-widest text-secondary font-bold">Energi &amp; Miljø (EMIL)</span>
+</div>
+<div class="flex flex-col">
+<span class="font-serif text-2xl text-primary">Smørekoppen</span>
+<span class="text-xs uppercase tracking-widest text-secondary font-bold">Maskin- og Energiteknologi</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Bento Grid: The Cabin's Soul -->
+<section class="bg-surface-container-low py-24">
+<div class="px-8 max-w-7xl mx-auto">
+<div class="text-center mb-16">
+<h2 class="text-5xl font-serif text-primary mb-4">Livet på Hytta</h2>
+<p class="text-on-surface-variant max-w-xl mx-auto">Et øvosystem bygget for ettertanke, feiring og den av og til stille åpenbaringen.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-4 h-auto md:h-[600px]">
+<div class="md:col-span-2 md:row-span-2 bg-surface rounded-lg p-8 flex flex-col justify-end relative overflow-hidden group">
+<img alt="wide shot of a modern Scandinavian wooden cabin in a snowy pine forest at twilight with warm lights glowing through windows" class="absolute inset-0 w-full h-full object-cover opacity-20 group-hover:scale-105 transition-transform duration-700" src="Bilder av hytta/IMG_0868.JPG"/>
+<div class="relative z-10">
+<span class="material-symbols-outlined text-secondary text-4xl mb-4">castle</span>
+<h3 class="text-3xl font-serif text-primary mb-2">Arkitekturen</h3>
+<p class="text-on-surface-variant font-body">Skapt med håndhugget seder og lokal stein hedrer strukturen det røffe landskapet den bebor.</p>
+</div>
+</div>
+<div class="md:col-span-2 bg-primary text-on-primary rounded-lg p-8 flex items-center justify-between overflow-hidden relative">
+<div class="z-10">
+<h3 class="text-2xl font-serif mb-2">Sosial Tradisjon</h3>
+<p class="text-on-primary-container text-sm max-w-xs">Fra de legendariske «Hyttestarter» til stille leseretretter under nordlyset.</p>
+</div>
+<span class="material-symbols-outlined text-8xl text-primary-container/30 absolute right-[-20px]">groups</span>
+</div>
+<div class="md:col-span-1 bg-secondary-container rounded-lg p-8 flex flex-col justify-center text-center">
+<span class="material-symbols-outlined text-on-secondary-container text-3xl mb-2">fireplace</span>
+<h4 class="font-serif text-on-secondary-container text-xl">Arnestedet</h4>
+<p class="text-xs text-on-secondary-fixed-variant mt-2 font-label uppercase tracking-widest">Alltid brennende</p>
+</div>
+<div class="md:col-span-1 bg-surface-container-highest rounded-lg p-8 flex flex-col justify-center text-center">
+<span class="material-symbols-outlined text-primary text-3xl mb-2">forest</span>
+<h4 class="font-serif text-primary text-xl">Villmarka</h4>
+<p class="text-xs text-on-surface-variant mt-2 font-label uppercase tracking-widest">59 min fra Gløshaugen</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Hyttestyret (Cabin Board) Section -->
+<section class="px-8 py-32 max-w-7xl mx-auto">
+<div class="flex flex-col md:flex-row justify-between items-baseline mb-16 gap-6">
+<div>
+<span class="font-label text-secondary uppercase tracking-[0.2rem] text-sm mb-4 block">Voktere</span>
+<h2 class="text-5xl font-serif text-primary tracking-tighter">Møt Hyttestyret</h2>
+</div>
+<p class="text-on-surface-variant max-w-md text-lg leading-relaxed italic">
+                    De valgte representantene ansvarlige for bevaring og forvaltning av hyttens arv.
+                </p>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
+<!-- Board Member 1 -->
+<div class="group">
+<div class="aspect-[3/4] bg-surface-container-high rounded-lg overflow-hidden mb-6 relative">
+<div class="absolute inset-0 flex items-center justify-center opacity-40">
+<span class="material-symbols-outlined text-6xl text-outline">person</span>
+</div>
+<img alt="Hyttestyret Member" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" src=""/>
+</div>
+<h3 class="text-2xl font-serif text-primary mb-1">Anders Berg</h3>
+<p class="font-label uppercase tracking-widest text-xs text-secondary font-bold">Leder</p>
+</div>
+<!-- Board Member 2 -->
+<div class="group">
+<div class="aspect-[3/4] bg-surface-container-high rounded-lg overflow-hidden mb-6 relative">
+<div class="absolute inset-0 flex items-center justify-center opacity-40">
+<span class="material-symbols-outlined text-6xl text-outline">person</span>
+</div>
+<img alt="Hyttestyret Member" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" src=""/>
+</div>
+<h3 class="text-2xl font-serif text-primary mb-1">Ingrid Foss</h3>
+<p class="font-label uppercase tracking-widest text-xs text-secondary font-bold">Nestleder</p>
+</div>
+<!-- Board Member 3 -->
+<div class="group">
+<div class="aspect-[3/4] bg-surface-container-high rounded-lg overflow-hidden mb-6 relative">
+<div class="absolute inset-0 flex items-center justify-center opacity-40">
+<span class="material-symbols-outlined text-6xl text-outline">person</span>
+</div>
+<img alt="Hyttestyret Member" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" src=""/>
+</div>
+<h3 class="text-2xl font-serif text-primary mb-1">Erik Lunde</h3>
+<p class="font-label uppercase tracking-widest text-xs text-secondary font-bold">Økonomiansvarlig</p>
+</div>
+<!-- Board Member 4 -->
+<div class="group">
+<div class="aspect-[3/4] bg-surface-container-high rounded-lg overflow-hidden mb-6 relative">
+<div class="absolute inset-0 flex items-center justify-center opacity-40">
+<span class="material-symbols-outlined text-6xl text-outline">person</span>
+</div>
+<img alt="Hyttestyret Member" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" src=""/>
+</div>
+<h3 class="text-2xl font-serif text-primary mb-1">Sofie Bakke</h3>
+<p class="font-label uppercase tracking-widest text-xs text-secondary font-bold">Bookingansvarlig</p>
+</div>
+<!-- Board Member 5 -->
+<div class="group">
+<div class="aspect-[3/4] bg-surface-container-high rounded-lg overflow-hidden mb-6 relative">
+<div class="absolute inset-0 flex items-center justify-center opacity-40">
+<span class="material-symbols-outlined text-6xl text-outline">person</span>
+</div>
+<img alt="Hyttestyret Member" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" src=""/>
+</div>
+<h3 class="text-2xl font-serif text-primary mb-1">Henrik Holm</h3>
+<p class="font-label uppercase tracking-widest text-xs text-secondary font-bold">Vedlikeholdssjef</p>
+</div>
+<!-- Board Member 6 -->
+<div class="group">
+<div class="aspect-[3/4] bg-surface-container-high rounded-lg overflow-hidden mb-6 relative">
+<div class="absolute inset-0 flex items-center justify-center opacity-40">
+<span class="material-symbols-outlined text-6xl text-outline">person</span>
+</div>
+<img alt="Hyttestyret Member" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" src=""/>
+</div>
+<h3 class="text-2xl font-serif text-primary mb-1">Maren Vik</h3>
+<p class="font-label uppercase tracking-widest text-xs text-secondary font-bold">Informasjonsansvarlig</p>
+</div>
+</div>
+</section>
+<!-- The Vision Statement -->
+<section class="px-8 py-32 max-w-5xl mx-auto text-center">
+<span class="material-symbols-outlined text-secondary text-5xl mb-8">menu_book</span>
+<blockquote class="text-4xl md:text-5xl font-serif text-primary italic leading-tight mb-12">
+                «Vi deler ikke bare et tak; vi deler en historie av latter, sene diskusjoner og den stille freden i de norske skoger.»
+            </blockquote>
+<p class="text-label text-secondary uppercase tracking-[0.3rem] font-bold">— Emil &amp; Smørekoppen Styret</p>
+</section>
+<!-- Placeholder Logos Section -->
+<section class="px-8 py-20 bg-stone-100 border-y border-outline-variant/20">
+<div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-around items-center gap-12 opacity-60 grayscale hover:grayscale-0 transition-all">
+<div class="flex items-center gap-4">
+<div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center text-on-primary font-serif text-2xl italic">E</div>
+<div class="h-8 w-px bg-outline-variant"></div>
+<span class="font-label uppercase tracking-widest text-primary text-sm font-bold">Linjeforeningen Emil</span>
+</div>
+<div class="flex items-center gap-4">
+<div class="w-16 h-16 border-2 border-secondary rounded-full flex items-center justify-center text-secondary font-serif text-2xl italic">S</div>
+<div class="h-8 w-px bg-outline-variant"></div>
+<span class="font-label uppercase tracking-widest text-secondary text-sm font-bold">Linjeforeningen Smørekoppen</span>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer Component -->
+<footer class="w-full py-12 px-8 bg-stone-100 dark:bg-stone-950">
+<div class="flex flex-col md:flex-row justify-between items-center gap-8 w-full max-w-7xl mx-auto">
+<div class="text-stone-800 dark:text-stone-200 font-serif italic text-xl">Hyttekom</div>
+<div class="flex flex-wrap justify-center gap-8">
+<a class="font-sans text-sm uppercase tracking-widest text-stone-500 dark:text-stone-400 hover:text-emerald-700 dark:hover:text-emerald-300 transition-all" href="#">Vilkår for Bruk</a>
+<a class="font-sans text-sm uppercase tracking-widest text-stone-500 dark:text-stone-400 hover:text-emerald-700 dark:hover:text-emerald-300 transition-all" href="#">Personvernpolicy</a>
+<a class="font-sans text-sm uppercase tracking-widest text-stone-500 dark:text-stone-400 hover:text-emerald-700 dark:hover:text-emerald-300 transition-all" href="mailto:kommunikasjonssjef@eshyttekom.no">Kontakt Oss</a>
+</div>
+<div class="text-stone-500 dark:text-stone-400 text-xs font-sans uppercase tracking-[0.2rem]">
+                © 2025 Emil &amp; Smørekoppen. Alle rettigheter forbeholdt.
+            </div>
+</div>
+</footer>
+</body></html>

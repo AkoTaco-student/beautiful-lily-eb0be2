@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+
+<html class="light" lang="no"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Bildegalleri | Hyttekom</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;family=Manrope:wght@200..800&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-error": "#ffffff",
+              "surface-container-highest": "#e4e2dd",
+              "error-container": "#ffdad6",
+              "on-primary-fixed": "#111f12",
+              "primary": "#182519",
+              "secondary": "#785833",
+              "background": "#fbf9f4",
+              "surface-container-high": "#eae8e3",
+              "tertiary-container": "#423528",
+              "surface-variant": "#e4e2dd",
+              "on-primary": "#ffffff",
+              "surface-bright": "#fbf9f4",
+              "inverse-on-surface": "#f2f1ec",
+              "primary-container": "#2d3b2d",
+              "on-tertiary": "#ffffff",
+              "outline-variant": "#c4c8c0",
+              "on-tertiary-container": "#b09e8c",
+              "on-secondary-fixed": "#2b1700",
+              "on-error-container": "#93000a",
+              "surface": "#fbf9f4",
+              "on-secondary-fixed-variant": "#5e411e",
+              "on-secondary-container": "#795933",
+              "on-background": "#1b1c19",
+              "on-primary-container": "#95a593",
+              "primary-fixed": "#d7e7d3",
+              "surface-container-low": "#f5f3ee",
+              "on-tertiary-fixed": "#241a0e",
+              "outline": "#747872",
+              "on-tertiary-fixed-variant": "#524436",
+              "inverse-surface": "#30312e",
+              "secondary-fixed": "#ffddb9",
+              "on-surface-variant": "#444842",
+              "error": "#ba1a1a",
+              "tertiary-fixed-dim": "#d7c3b0",
+              "surface-container": "#f0eee9",
+              "surface-dim": "#dbdad5",
+              "inverse-primary": "#bbcbb8",
+              "surface-container-lowest": "#ffffff",
+              "on-surface": "#1b1c19",
+              "tertiary-fixed": "#f4dfcb",
+              "on-secondary": "#ffffff",
+              "primary-fixed-dim": "#bbcbb8",
+              "secondary-container": "#fed2a3",
+              "secondary-fixed-dim": "#e9bf91",
+              "tertiary": "#2b2014",
+              "surface-tint": "#536252",
+              "on-primary-fixed-variant": "#3c4a3c"
+            },
+            fontFamily: {
+              "headline": ["Newsreader"],
+              "body": ["Manrope"],
+              "label": ["Manrope"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Manrope', sans-serif;
+            background-color: #fbf9f4;
+            color: #1b1c19;
+        }
+        .serif-display {
+            font-family: 'Newsreader', serif;
+        }
+        /* Custom scrollbar for refined look */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #fbf9f4; }
+        ::-webkit-scrollbar-thumb { background: #d7e7d3; border-radius: 10px; }
+    </style>
+</head>
+<body class="bg-background text-on-background antialiased">
+<!-- Top Navigation Bar -->
+<nav class="fixed top-0 w-full z-50 bg-stone-50/80 dark:bg-stone-900/80 backdrop-blur-md">
+<div class="flex justify-between items-center px-8 py-6 max-w-7xl mx-auto">
+<a class="font-serif text-2xl tracking-tighter text-emerald-900 dark:text-emerald-500" href="index.html">Hyttekom</a>
+<div class="hidden md:flex items-center space-x-10 font-serif tracking-tight text-lg">
+<a class="text-stone-600 dark:text-stone-400 font-medium hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors duration-300" href="index.html">Hjem</a>
+<a class="text-stone-600 dark:text-stone-400 font-medium hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors duration-300" href="fasiliteter.html">Fasiliteter</a>
+<a class="text-emerald-900 dark:text-emerald-400 border-b-2 border-emerald-900 dark:border-emerald-400 pb-1 hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors duration-300" href="bildegalleri.html">Galleri</a>
+<a class="text-stone-600 dark:text-stone-400 font-medium hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors duration-300" href="booking.html">Bestill</a>
+<a class="text-stone-600 dark:text-stone-400 font-medium hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors duration-300" href="om-oss.html">Om Oss</a>
+</div>
+<a href="booking.html" class="hidden md:inline-flex bg-primary text-on-primary px-6 py-2 rounded-full font-body text-sm font-semibold hover:bg-primary-container transition-colors">Reserver</a>
+<button id="mobile-menu-btn" class="md:hidden p-2 text-emerald-900" aria-label="Meny"><span class="material-symbols-outlined">menu</span></button>
+</div>
+<div id="mobile-menu" class="hidden absolute top-full left-0 w-full bg-stone-50/95 backdrop-blur-md border-t border-stone-200 py-6 px-8 flex flex-col space-y-4">
+<a class="font-serif text-lg text-stone-700 hover:text-emerald-800 transition-colors" href="index.html">Hjem</a>
+<a class="font-serif text-lg text-stone-700 hover:text-emerald-800 transition-colors" href="fasiliteter.html">Fasiliteter</a>
+<a class="font-serif text-lg text-stone-700 hover:text-emerald-800 transition-colors" href="bildegalleri.html">Galleri</a>
+<a class="font-serif text-lg text-stone-700 hover:text-emerald-800 transition-colors" href="booking.html">Bestill</a>
+<a class="font-serif text-lg text-stone-700 hover:text-emerald-800 transition-colors" href="om-oss.html">Om Oss</a>
+<a href="booking.html" class="bg-primary text-on-primary px-6 py-3 rounded-full font-body font-semibold text-sm text-center">Reserver</a>
+</div>
+</nav>
+<script>
+document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+  const menu = document.getElementById('mobile-menu');
+  menu.classList.toggle('hidden');
+  this.querySelector('.material-symbols-outlined').textContent = menu.classList.contains('hidden') ? 'menu' : 'close';
+});
+</script>
+<main class="pt-32 pb-24 max-w-7xl mx-auto px-8">
+<!-- Header Section -->
+<header class="mb-20 max-w-3xl">
+<span class="font-label text-secondary text-sm font-bold tracking-widest uppercase block mb-4">DEN VISUELLE DAGBOKEN</span>
+<h1 class="serif-display text-6xl md:text-8xl text-primary leading-none tracking-tighter mb-8 italic">Emil &amp; Smørekoppen</h1>
+<p class="font-body text-xl text-on-surface-variant leading-relaxed">
+                En visuell reise gjennom vår retretten i skogen. Utforsk tjue unike perspektiver der arkitektur møter natur, fanget gjennom et redaksjonelt linse.
+            </p>
+</header>
+<!-- Editorial 16-Image Grid -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
+<!-- 1. Exterior Hero (Wide) -->
+<div class="md:col-span-8 group relative overflow-hidden rounded-lg bg-surface-container-low h-[500px]">
+<img alt="Cabin Exterior" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="Bilder av hytta/IMG_0859.JPG"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-8">
+<p class="text-on-primary font-serif text-2xl italic">Eksteriøret</p>
+</div>
+</div>
+<!-- 2. Nature Vertical -->
+<div class="md:col-span-4 group relative overflow-hidden rounded-lg bg-surface-container-low h-[500px]">
+<img alt="Surrounding Forest" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="Bilder av hytta/IMG_0861.JPG"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-8">
+<p class="text-on-primary font-serif text-2xl italic">Hvisking i furua</p>
+</div>
+</div>
+<!-- 3. Living Room (Large) -->
+<div class="md:col-span-6 group relative overflow-hidden rounded-lg bg-surface-container-low h-[600px]">
+<img alt="Living Area" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="Bilder av hytta/IMG_0862.JPG"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-8">
+<p class="text-on-primary font-serif text-2xl italic">Hjemmets hjerte</p>
+</div>
+</div>
+<!-- 4. Kitchen (Horizontal) -->
+<div class="md:col-span-6 group relative overflow-hidden rounded-lg bg-surface-container-low h-[288px]">
+<img alt="The Kitchen" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="Bilder av hytta/IMG_0865.JPG"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-8">
+<p class="text-on-primary font-serif text-2xl italic">Kulinarisk lerret</p>
+</div>
+</div>
+<!-- 5. Detail Shot (Small) -->
+<div class="md:col-span-3 group relative overflow-hidden rounded-lg bg-surface-container-low h-[288px]">
+<img alt="Bedroom Detail" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="Bilder av hytta/IMG_0866.JPG"/>
+</div>
+<!-- 6. Master Bedroom (Vertical) -->
+<div class="md:col-span-3 group relative overflow-hidden rounded-lg bg-surface-container-low h-[600px] md:-mt-[312px]">
+<img alt="Bedroom" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="Bilder av hytta/IMG_0868.JPG"/>
+</div>
+<!-- 7. Bathroom (Horizontal) -->
+<div class="md:col-span-6 group relative overflow-hidden rounded-lg bg-surface-container-low h-[288px]">
+<img alt="Bath Detail" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="Bilder av hytta/IMG_0869.JPG"/>
+</div>
+<!-- 8. Art Detail (Small) -->
+<div class="md:col-span-4 group relative overflow-hidden rounded-lg bg-surface-container-low h-[400px]">
+<img alt="Detail" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="Bilder av hytta/IMG_0870.JPG"/>
+</div>
+<!-- 9. Terrace (Square-ish) -->
+<div class="md:col-span-4 group relative overflow-hidden rounded-lg bg-surface-container-low h-[400px]">
+<img alt="Terrace" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="Bilder av hytta/IMG_0872.JPG"/>
+</div>
+<!-- 10. Fireplace Detail -->
+<div class="md:col-span-4 group relative overflow-hidden rounded-lg bg-surface-container-low h-[400px]">
+<img alt="Fireplace" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="Bilder av hytta/IMG_0873.JPG"/>
+</div>
+<!-- 11. Large Atmospheric (Wide) -->
+<div class="md:col-span-12 group relative overflow-hidden rounded-lg bg-surface-container-low h-[450px]">
+<img alt="Landscape" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="Bilder av hytta/IMG_0874.JPG"/>
+</div>
+<!-- 12. Corner Detail -->
+<div class="md:col-span-3 group relative overflow-hidden rounded-lg bg-surface-container-low h-[350px]">
+<img alt="Corner" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="Bilder av hytta/IMG_0875.JPG"/>
+</div>
+<!-- 13. Light Play -->
+<div class="md:col-span-3 group relative overflow-hidden rounded-lg bg-surface-container-low h-[350px]">
+<img alt="Light" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="Bilder av hytta/IMG_0876.JPG"/>
+</div>
+<!-- 14. Mid-sized Detail (Vertical) -->
+<div class="md:col-span-6 group relative overflow-hidden rounded-lg bg-surface-container-low h-[350px]">
+<img alt="Detail 2" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="Bilder av hytta/IMG_0877.JPG"/>
+</div>
+<!-- 15. Minimalist Object -->
+<div class="md:col-span-6 group relative overflow-hidden rounded-lg bg-surface-container-low h-[400px]">
+<img alt="Object" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="Bilder av hytta/IMG_0879.JPG"/>
+</div>
+<!-- 16. Final Vertical -->
+<div class="md:col-span-6 group relative overflow-hidden rounded-lg bg-surface-container-low h-[400px]">
+<img alt="View" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="Bilder av hytta/IMG_0880.JPG"/>
+</div>
+</div>
+<!-- Quote / Divider Section -->
+<section class="mt-40 mb-32 text-center max-w-4xl mx-auto">
+<h2 class="serif-display text-4xl md:text-6xl text-primary leading-tight italic">
+                "Architecture is the learned game, correct and magnificent, of forms assembled in the light."
+            </h2>
+<p class="font-label text-secondary mt-8 font-bold tracking-[0.2em]">— LE CORBUSIER</p>
+</section>
+<!-- Final Wide Section -->
+<div class="w-full h-[600px] rounded-lg overflow-hidden group relative bg-surface-container-low">
+<img alt="Mountain View" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" src="Bilder av hytta/IMG_0881.JPG"/>
+<div class="absolute inset-0 flex flex-col items-center justify-center text-center p-8 bg-primary/20 backdrop-blur-[2px]">
+<span class="font-label text-on-primary text-xs tracking-widest uppercase mb-4">OPPLEV RETRETTEN</span>
+<h3 class="serif-display text-5xl text-on-primary mb-8">Klar til å skrive din egen historie?</h3>
+<a href="booking.html" class="bg-surface-bright text-primary px-10 py-4 rounded-full font-label text-sm uppercase tracking-widest hover:bg-white transition-all shadow-xl">
+                    Forhør deg om tilgjengelighet
+                </a>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-stone-100 dark:bg-stone-950 w-full py-12 px-8">
+<div class="flex flex-col md:flex-row justify-between items-center gap-8 w-full max-w-7xl mx-auto">
+<div class="font-serif italic text-xl text-stone-800 dark:text-stone-200">
+                Hyttekom
+            </div>
+<div class="flex flex-wrap justify-center gap-8 font-sans text-sm uppercase tracking-widest text-stone-500 dark:text-stone-400">
+<a class="hover:text-emerald-700 dark:hover:text-emerald-300 transition-all" href="#">Vilkår for Bruk</a>
+<a class="hover:text-emerald-700 dark:hover:text-emerald-300 transition-all" href="#">Personvernpolicy</a>
+<a class="hover:text-emerald-700 dark:hover:text-emerald-300 transition-all" href="mailto:kommunikasjonssjef@eshyttekom.no">Kontakt Oss</a>
+</div>
+<div class="font-sans text-xs uppercase tracking-widest text-stone-400">
+                © 2025 Emil &amp; Smørekoppen. Alle rettigheter forbeholdt.
+            </div>
+</div>
+</footer>
+<!-- FAB for quick booking -->
+<button class="fixed bottom-8 right-8 bg-primary text-on-primary w-16 h-16 rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-transform z-40 group">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">calendar_month</span>
+<span class="absolute right-20 bg-primary text-on-primary px-4 py-2 rounded-lg text-sm opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">Book Oppholdet</span>
+</button>
+</body></html>
