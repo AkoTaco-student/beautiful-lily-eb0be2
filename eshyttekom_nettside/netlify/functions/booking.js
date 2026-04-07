@@ -2,7 +2,8 @@ import sgMail from "@sendgrid/mail";
 
 const allowedOrigins = [
   "https://statuesque-marzipan-20a8ac.netlify.app",
-  "https://eshyttekom.no"
+  "https://eshyttekom.no",
+  "https://admirable-belekoy-28489f.netlify.app"
 ];
 
 if (process.env.SENDGRID_API_KEY) {
@@ -10,15 +11,23 @@ if (process.env.SENDGRID_API_KEY) {
 }
 
 export default async function handler(req) {
-
-  const origin = req.headers.get("origin");
-  if (origin && !allowedOrigins.includes(origin)) {
-    return new Response("Origin not allowed", { status: 403 });
+  const origin = req.headers.origin; 
+  const headers = {
+  "Access-Control-Allow-Origin": "*", // Replace with specific origins if needed
+  "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type, Authorization",
+  };
+  if (req.method === "OPTIONS") {
+    return new Response(null, { status: 200, headers });
   }
 
-  /* ---------- GET BOOKINGS ---------- */
+  //if (origin && !allowedOrigins.includes(origin)) {
+    //return new Response("Origin not allowed", { status: 403, headers });
+  //}
+
+  // Handle GET requests
   if (req.method === "GET") {
-    const res = await fetch(`${process.env.SUPABASE_URL}/rest/v1/bookinger`, {
+    const res = await fetch(`${process.env.SUPABASE_URL}/rest/v1/bookinger?select=fra_dato,til_dato,status`, {
       headers: {
         "apikey": process.env.SUPABASE_SERVICE_KEY,
         "Authorization": `Bearer ${process.env.SUPABASE_SERVICE_KEY}`,
@@ -26,19 +35,18 @@ export default async function handler(req) {
     });
 
     const data = await res.json();
-
     return new Response(JSON.stringify(data), {
-      headers: { "Content-Type": "application/json" }
+      headers: { "Content-Type": "application/json", ...headers }
     });
   }
-
-  /* ---------- CREATE BOOKING ---------- */
+  
+  // Handle POST requests
   if (req.method === "POST") {
     let data;
     try {
       data = await req.json();
     } catch {
-      return new Response("Ugyldig data", { status: 400 });
+      return new Response("Ugyldig data", { status: 400, headers });
     }
 
     const {
@@ -55,10 +63,11 @@ export default async function handler(req) {
     } = data;
 
     if (!fornavn || !etternavn || !epost || !type_gjest) {
-      return new Response("Mangler påkrevde felt", { status: 400 });
+      return new Response("Mangler påkrevde felt", { status: 400, headers });
     }
+    
 
-    const res = await fetch(`${process.env.SUPABASE_URL}/rest/v1/bookinger`, {
+    const bookingRes = await fetch(`${process.env.SUPABASE_URL}/rest/v1/bookinger`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -77,13 +86,14 @@ export default async function handler(req) {
         antall_gjester: antall_gjester ? parseInt(antall_gjester) : null,
         beregnet_pris: beregnet_pris || null,
         kommentar: kommentar || null,
+        status: "pending"
       }),
     });
 
-    if (!res.ok) {
-      const err = await res.text();
+    if (!bookingRes.ok) {
+      const err = await bookingRes.text();
       console.error("Supabase feil:", err);
-      return new Response("Feil ved lagring av booking", { status: 500 });
+      return new Response("Feil ved lagring av booking", { status: 500, headers });
     }
 
     try {
@@ -105,14 +115,15 @@ Kommentar: ${kommentar || "-"}
         `,
       });
     } catch (err) {
-      console.error("SendGrid-feil:", err);
+      console.error("SendGrid-feil:", err.response?.body || err.message);
+      return new Response("Feil ved sending av e-post", { status: 500, headers });
     }
 
     return new Response(JSON.stringify({ ok: true }), {
       status: 200,
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", ...headers },
     });
   }
 
-  return new Response("Method not allowed", { status: 405 });
+  return new Response("Method not allowed", { status: 405, headers });
 }
