@@ -7,10 +7,18 @@
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;family=Manrope:wght@200..800&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+const FUNCTION_BASE = 'https://my-site.netlify.app/.netlify/functions';
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <script src="bookinger.js"></script>
 <script id="tailwind-config">
+      
+      
+      
+      const FUNCTION_BASE = 'https://my-site.netlify.app/.netlify/functions';
+
+
+      
       tailwind.config = {
         darkMode: "class",
         theme: {
@@ -330,11 +338,18 @@ function keyToDate(k)   { const [y,m,d] = k.split('-'); return new Date(+y, +m-1
 let bookedePerioder = [];
 
 async function lastBookinger() {
+
+
+
   try {
-    const res = await fetch(
-      `${SUPABASE_URL}/rest/v1/bookinger?select=fra_dato,til_dato&status=eq.confirmed`,
-      { headers: { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}` } }
-    );
+    const res = await fetch(`${FUNCTION_BASE}/booking`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+
+
+
     if (res.ok) {
       bookedePerioder = await res.json();
     }
