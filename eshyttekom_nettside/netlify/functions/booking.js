@@ -6,8 +6,9 @@ const allowedOrigins = [
   "https://admirable-belekoy-28489f.netlify.app"
 ];
 
-if (process.env.SENDGRID_API_KEY) {
-  sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY;
+if (SENDGRID_API_KEY) {
+  sgMail.setApiKey(SENDGRID_API_KEY);
 }
 
 export default async function handler(req) {
@@ -20,6 +21,8 @@ export default async function handler(req) {
 
   const SUPABASE_URL = process.env.SUPABASE_URL;
   const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY;
+  const SUPABASE_BOOKING_TABLE = process.env.SUPABASE_BOOKING_TABLE || 'bookinger';
+  const SENDGRID_ENABLED = Boolean(SENDGRID_API_KEY);
 
   if (!SUPABASE_URL || !SUPABASE_SERVICE_KEY) {
     console.error('Manglende Supabase-konfigurasjon');
@@ -35,10 +38,10 @@ export default async function handler(req) {
 
   // Handle GET requests
   if (req.method === "GET") {
-    const res = await fetch(`${process.env.SUPABASE_URL}/rest/v1/bookinger?select=fra_dato,til_dato,status`, {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/${SUPABASE_BOOKING_TABLE}?select=fra_dato,til_dato,status`, {
       headers: {
-        "apikey": process.env.SUPABASE_SERVICE_KEY,
-        "Authorization": `Bearer ${process.env.SUPABASE_SERVICE_KEY}`,
+        "apikey": SUPABASE_SERVICE_KEY,
+        "Authorization": `Bearer ${SUPABASE_SERVICE_KEY}`,
       }
     });
 
@@ -75,7 +78,7 @@ export default async function handler(req) {
     }
     
 
-    const bookingRes = await fetch(`${SUPABASE_URL}/rest/v1/bookinger`, {
+    const bookingRes = await fetch(`${SUPABASE_URL}/rest/v1/${SUPABASE_BOOKING_TABLE}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -105,12 +108,13 @@ export default async function handler(req) {
       return new Response(`Feil ved lagring av booking: ${err}`, { status: 500, headers });
     }
 
-    try {
-      await sgMail.send({
-        to: ["bookingansvarlig@eshyttekom.no", "finansforvalter@eshyttekom.no"],
-        from: "noreply@eshyttekom.no",
-        subject: `Ny booking fra ${fornavn} ${etternavn}`,
-        text: `
+    if (SENDGRID_ENABLED) {
+      try {
+        await sgMail.send({
+          to: ["bookingansvarlig@eshyttekom.no", "finansforvalter@eshyttekom.no"],
+          from: "noreply@eshyttekom.no",
+          subject: `Ny booking fra ${fornavn} ${etternavn}`,
+          text: `
 Ny booking mottatt:
 
 Navn: ${fornavn} ${etternavn}
@@ -121,11 +125,13 @@ Fra: ${fra_dato || "-"} Til: ${til_dato || "-"}
 Antall gjester: ${antall_gjester || "-"}
 Beregnet pris: ${beregnet_pris || "-"}
 Kommentar: ${kommentar || "-"}
-        `,
-      });
-    } catch (err) {
-      console.error("SendGrid-feil:", err.response?.body || err.message);
-      return new Response("Feil ved sending av e-post", { status: 500, headers });
+          `,
+        });
+      } catch (err) {
+        console.error("SendGrid-feil:", err.response?.body || err.message);
+      }
+    } else {
+      console.warn('SendGrid API-nøkkel mangler. E-post blir ikke sendt.');
     }
 
     return new Response(JSON.stringify({ ok: true }), {

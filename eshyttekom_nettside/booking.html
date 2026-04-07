@@ -326,6 +326,11 @@ let endDate   = null;
 function toKey(y, m, d) { return `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`; }
 function keyToDate(k)   { const [y,m,d] = k.split('-'); return new Date(+y, +m-1, +d); }
 function formatDateNorwegian(d) { return `${d.getDate()}. ${MONTHS[d.getMonth()]} ${d.getFullYear()}`; }
+function daysBetween(start, end) {
+  const utcStart = Date.UTC(start.getFullYear(), start.getMonth(), start.getDate());
+  const utcEnd = Date.UTC(end.getFullYear(), end.getMonth(), end.getDate());
+  return Math.floor((utcEnd - utcStart) / 86400000);
+}
 
 // Bookinger lastet fra Supabase
 let bookedePerioder = [];
@@ -508,7 +513,7 @@ function updatePrice() {
 
   if (!startDate || !endDate || !type) { box.classList.add('hidden'); return; }
 
-  const nights  = Math.round((endDate - startDate) / 86400000);
+  const nights  = daysBetween(startDate, endDate);
   const weekend = isWeekendPeriod(startDate, endDate);
   let pris = 0;
   let desc = '';
