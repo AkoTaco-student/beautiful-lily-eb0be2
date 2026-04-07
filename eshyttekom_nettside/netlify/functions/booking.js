@@ -11,12 +11,20 @@ if (process.env.SENDGRID_API_KEY) {
 }
 
 export default async function handler(req) {
-  const origin = req.headers.origin; 
+  const origin = req.headers.origin;
   const headers = {
-  "Access-Control-Allow-Origin": "*", // Replace with specific origins if needed
-  "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-  "Access-Control-Allow-Headers": "Content-Type, Authorization",
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type, Authorization",
   };
+
+  const SUPABASE_URL = process.env.SUPABASE_URL;
+  const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY;
+
+  if (!SUPABASE_URL || !SUPABASE_SERVICE_KEY) {
+    console.error('Manglende Supabase-konfigurasjon');
+    return new Response("Feil ved lagring av booking: Supabase-konfigurasjon mangler.", { status: 500, headers });
+  }
   if (req.method === "OPTIONS") {
     return new Response(null, { status: 200, headers });
   }
@@ -67,12 +75,12 @@ export default async function handler(req) {
     }
     
 
-    const bookingRes = await fetch(`${process.env.SUPABASE_URL}/rest/v1/bookinger`, {
+    const bookingRes = await fetch(`${SUPABASE_URL}/rest/v1/bookinger`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "apikey": process.env.SUPABASE_SERVICE_KEY,
-        "Authorization": `Bearer ${process.env.SUPABASE_SERVICE_KEY}`,
+        "apikey": SUPABASE_SERVICE_KEY,
+        "Authorization": `Bearer ${SUPABASE_SERVICE_KEY}`,
         "Prefer": "return=minimal",
       },
       body: JSON.stringify({
@@ -91,9 +99,10 @@ export default async function handler(req) {
     });
 
     if (!bookingRes.ok) {
-      const err = await bookingRes.text();
+      let err = await bookingRes.text();
+      try { err = JSON.parse(err).message || err; } catch {}
       console.error("Supabase feil:", err);
-      return new Response("Feil ved lagring av booking", { status: 500, headers });
+      return new Response(`Feil ved lagring av booking: ${err}`, { status: 500, headers });
     }
 
     try {

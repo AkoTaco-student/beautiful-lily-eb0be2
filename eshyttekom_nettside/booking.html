@@ -325,6 +325,7 @@ let endDate   = null;
 
 function toKey(y, m, d) { return `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`; }
 function keyToDate(k)   { const [y,m,d] = k.split('-'); return new Date(+y, +m-1, +d); }
+function formatDateNorwegian(d) { return `${d.getDate()}. ${MONTHS[d.getMonth()]} ${d.getFullYear()}`; }
 
 // Bookinger lastet fra Supabase
 let bookedePerioder = [];
@@ -424,11 +425,9 @@ function renderCalendar() {
 
   // Update selection label
   if (startDate && endDate) {
-    const fmt = d => `${d.getDate()}. ${MONTHS[d.getMonth()]} ${d.getFullYear()}`;
-    sel.textContent = `Valgt periode: ${fmt(startDate)} → ${fmt(endDate)}`;
+    sel.textContent = `Valgt periode: ${formatDateNorwegian(startDate)} → ${formatDateNorwegian(endDate)}`;
   } else if (startDate) {
-    const fmt = d => `${d.getDate()}. ${MONTHS[d.getMonth()]}`;
-    sel.textContent = `Innsjekk: ${fmt(startDate)} — velg utsjekk`;
+    sel.textContent = `Innsjekk: ${formatDateNorwegian(startDate)} — velg utsjekk`;
   } else {
     sel.textContent = '';
   }
@@ -514,6 +513,7 @@ function updatePrice() {
   let pris = 0;
   let desc = '';
 
+  const nightsLabel = nights === 1 ? 'natt' : 'netter';
   if (type === 'intern') {
     if (weekend) {
       // 250 kr/person, min 2500, max 6250
@@ -523,7 +523,7 @@ function updatePrice() {
       // 125 kr/person/natt, max 3125/natt
       const perNight = Math.min(guests * 125, 3125);
       pris = perNight * nights;
-      desc = `Intern ukedag · ${guests} pers × 125 kr × ${nights} natt${nights>1?'er':''}`;
+      desc = `Intern ukedag · ${guests} pers × 125 kr × ${nights} ${nightsLabel}`;
     }
   } else {
     if (weekend) {
@@ -534,7 +534,7 @@ function updatePrice() {
       // 250 kr/person/natt, min 2500, max 6250/natt
       const perNight = Math.min(Math.max(guests * 250, 2500), 6250);
       pris = perNight * nights;
-      desc = `Ekstern ukedag · ${guests} pers × 250 kr × ${nights} natt${nights>1?'er':''}`;
+      desc = `Ekstern ukedag · ${guests} pers × 250 kr × ${nights} ${nightsLabel}`;
     }
   }
 
@@ -567,6 +567,22 @@ document.getElementById('booking-form').addEventListener('submit', async functio
     beregnet_pris: parseInt(document.getElementById('price-total').textContent.replace(/\D/g,'')) || null,
     kommentar:      document.querySelector('[name="kommentar"]').value.trim(),
   };
+
+  if (!payload.fra_dato || !payload.til_dato) {
+    errBox.textContent = 'Velg både innsjekk og utsjekk før du sender booking.';
+    errBox.classList.remove('hidden');
+    btn.disabled = false;
+    btn.innerHTML = 'Send Bookingforespørsel <span class="material-symbols-outlined ml-3 text-lg">arrow_forward</span>';
+    return;
+  }
+
+  if (!payload.type_gjest) {
+    errBox.textContent = 'Velg type gjest før du sender booking.';
+    errBox.classList.remove('hidden');
+    btn.disabled = false;
+    btn.innerHTML = 'Send Bookingforespørsel <span class="material-symbols-outlined ml-3 text-lg">arrow_forward</span>';
+    return;
+  }
 
   try {
     const res = await fetch('/.netlify/functions/booking', {
