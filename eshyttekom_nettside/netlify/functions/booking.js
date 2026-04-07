@@ -1,3 +1,7 @@
+import sgMail from "@sendgrid/mail";
+
+sgMail.setApiKey(process.env.SENDGRID_API_KEY); // Legg til i Netlify Env Variables
+
 export default async function handler(req) {
   if (req.method !== "POST") {
     return new Response("Method not allowed", { status: 405 });
@@ -16,6 +20,7 @@ export default async function handler(req) {
     return new Response("Mangler påkrevde felt", { status: 400 });
   }
 
+  // Lagre booking i Supabase
   const res = await fetch(`${process.env.SUPABASE_URL}/rest/v1/bookinger`, {
     method: "POST",
     headers: {
@@ -44,10 +49,32 @@ export default async function handler(req) {
     return new Response("Feil ved lagring av booking", { status: 500 });
   }
 
+  // Send e-post til bookingansvarlig
+  try {
+    await sgMail.send({
+      to: "bookingansvarlig@eshyttekom.no",
+      from: "noreply@eshyttekom.no", // Verifisert SendGrid avsender
+      subject: `Ny booking fra ${fornavn} ${etternavn}`,
+      text: `
+Ny booking mottatt:
+
+Navn: ${fornavn} ${etternavn}
+E-post: ${epost}
+Telefon: ${telefon || "-"}
+Type gjest: ${type_gjest}
+Fra: ${fra_dato || "-"} Til: ${til_dato || "-"}
+Antall gjester: ${antall_gjester || "-"}
+Beregnet pris: ${beregnet_pris || "-"}
+Kommentar: ${kommentar || "-"}
+      `,
+    });
+  } catch (err) {
+    console.error("SendGrid-feil:", err);
+    // Fortsett likevel, siden booking er lagret
+  }
+
   return new Response(JSON.stringify({ ok: true }), {
     status: 200,
     headers: { "Content-Type": "application/json" },
   });
 }
-
-export const config = { path: "/api/booking" };
