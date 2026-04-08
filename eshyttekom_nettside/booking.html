@@ -273,7 +273,7 @@ document.getElementById('mobile-menu-btn').addEventListener('click', function() 
 <span class="material-symbols-outlined text-on-secondary-fixed-variant">eco</span>
 <div>
 <h4 class="font-label font-bold text-sm text-on-secondary-fixed mb-1 uppercase tracking-wider">MILJØVENNLIG OPPHOLD</h4>
-<p class="text-xs text-on-secondary-fixed-variant leading-relaxed">Hytta forvaltes av Hyttestyret med fokus på bærekraftig drift og dugnadsånd.</p>
+<p class="text-xs text-on-secondary-fixed-variant leading-relaxed">Hytta forvaltes av Hyttestyret og HytteComitéen med fokus på bærekraftig drift og dugnadsånd.</p>
 </div>
 </div>
 </aside>
@@ -300,7 +300,7 @@ document.getElementById('mobile-menu-btn').addEventListener('click', function() 
 <div class="flex flex-col md:flex-row justify-between items-center gap-8 w-full max-w-7xl mx-auto">
 <div class="flex flex-col items-center md:items-start gap-2">
 <span class="font-serif italic text-xl text-stone-800 dark:text-stone-200">Hyttekom</span>
-<p class="font-sans text-sm uppercase tracking-widest text-emerald-950 dark:text-emerald-200 opacity-60">© 2065 Emil &amp; Smørekoppen. Alle rettigheter forbeholdt.</p>
+<p class="font-sans text-sm uppercase tracking-widest text-emerald-950 dark:text-emerald-200 opacity-60">© 2025 Emil &amp; Smørekoppen. Alle rettigheter forbeholdt.</p>
 </div>
 <div class="flex gap-8 font-sans text-sm uppercase tracking-widest">
 <a class="text-stone-500 dark:text-stone-400 hover:text-emerald-700 dark:hover:text-emerald-300 transition-all" href="#">Vilkår for Bruk</a>
@@ -325,19 +325,16 @@ let endDate   = null;
 
 function toKey(y, m, d) { return `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`; }
 function keyToDate(k)   { const [y,m,d] = k.split('-'); return new Date(+y, +m-1, +d); }
-function formatDateNorwegian(d) { return `${d.getDate()}. ${MONTHS[d.getMonth()]} ${d.getFullYear()}`; }
-function daysBetween(start, end) {
-  const utcStart = Date.UTC(start.getFullYear(), start.getMonth(), start.getDate());
-  const utcEnd = Date.UTC(end.getFullYear(), end.getMonth(), end.getDate());
-  return Math.floor((utcEnd - utcStart) / 86400000);
-}
 
 // Bookinger lastet fra Supabase
 let bookedePerioder = [];
 
 async function lastBookinger() {
   try {
-    const res = await fetch('/.netlify/functions/booking')
+    const res = await fetch(
+      `${SUPABASE_URL}/rest/v1/bookinger?select=fra_dato,til_dato&status=eq.confirmed`,
+      { headers: { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}` } }
+    );
     if (res.ok) {
       bookedePerioder = await res.json();
     }
@@ -430,9 +427,11 @@ function renderCalendar() {
 
   // Update selection label
   if (startDate && endDate) {
-    sel.textContent = `Valgt periode: ${formatDateNorwegian(startDate)} → ${formatDateNorwegian(endDate)}`;
+    const fmt = d => `${d.getDate()}. ${MONTHS[d.getMonth()]} ${d.getFullYear()}`;
+    sel.textContent = `Valgt periode: ${fmt(startDate)} → ${fmt(endDate)}`;
   } else if (startDate) {
-    sel.textContent = `Innsjekk: ${formatDateNorwegian(startDate)} — velg utsjekk`;
+    const fmt = d => `${d.getDate()}. ${MONTHS[d.getMonth()]}`;
+    sel.textContent = `Innsjekk: ${fmt(startDate)} — velg utsjekk`;
   } else {
     sel.textContent = '';
   }
@@ -513,12 +512,11 @@ function updatePrice() {
 
   if (!startDate || !endDate || !type) { box.classList.add('hidden'); return; }
 
-  const nights  = daysBetween(startDate, endDate);
+  const nights  = Math.round((endDate - startDate) / 86400000);
   const weekend = isWeekendPeriod(startDate, endDate);
   let pris = 0;
   let desc = '';
 
-  const nightsLabel = nights === 1 ? 'natt' : 'netter';
   if (type === 'intern') {
     if (weekend) {
       // 250 kr/person, min 2500, max 6250
@@ -528,7 +526,7 @@ function updatePrice() {
       // 125 kr/person/natt, max 3125/natt
       const perNight = Math.min(guests * 125, 3125);
       pris = perNight * nights;
-      desc = `Intern ukedag · ${guests} pers × 125 kr × ${nights} ${nightsLabel}`;
+      desc = `Intern ukedag · ${guests} pers × 125 kr × ${nights} natt${nights>1?'er':''}`;
     }
   } else {
     if (weekend) {
@@ -539,7 +537,7 @@ function updatePrice() {
       // 250 kr/person/natt, min 2500, max 6250/natt
       const perNight = Math.min(Math.max(guests * 250, 2500), 6250);
       pris = perNight * nights;
-      desc = `Ekstern ukedag · ${guests} pers × 250 kr × ${nights} ${nightsLabel}`;
+      desc = `Ekstern ukedag · ${guests} pers × 250 kr × ${nights} natt${nights>1?'er':''}`;
     }
   }
 
@@ -569,25 +567,9 @@ document.getElementById('booking-form').addEventListener('submit', async functio
     fra_dato:       startDate ? fmt(startDate) : null,
     til_dato:       endDate   ? fmt(endDate)   : null,
     antall_gjester: guests,
-    beregnet_pris: parseInt(document.getElementById('price-total').textContent.replace(/\D/g,'')) || null,
+    beregnet_pris:  document.getElementById('price-total').textContent || null,
     kommentar:      document.querySelector('[name="kommentar"]').value.trim(),
   };
-
-  if (!payload.fra_dato || !payload.til_dato) {
-    errBox.textContent = 'Velg både innsjekk og utsjekk før du sender booking.';
-    errBox.classList.remove('hidden');
-    btn.disabled = false;
-    btn.innerHTML = 'Send Bookingforespørsel <span class="material-symbols-outlined ml-3 text-lg">arrow_forward</span>';
-    return;
-  }
-
-  if (!payload.type_gjest) {
-    errBox.textContent = 'Velg type gjest før du sender booking.';
-    errBox.classList.remove('hidden');
-    btn.disabled = false;
-    btn.innerHTML = 'Send Bookingforespørsel <span class="material-symbols-outlined ml-3 text-lg">arrow_forward</span>';
-    return;
-  }
 
   try {
     const res = await fetch('/.netlify/functions/booking', {
