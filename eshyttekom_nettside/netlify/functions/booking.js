@@ -32,17 +32,13 @@ export default async function handler(req) {
     return new Response(null, { status: 200, headers });
   }
 
-  //if (origin && !allowedOrigins.includes(origin)) {
-    //return new Response("Origin not allowed", { status: 403, headers });
-  //}
-
   // Handle GET requests
   if (req.method === "GET") {
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/${SUPABASE_BOOKING_TABLE}?select=fra_dato,til_dato,status&status=not.eq.cancelled`, {
-    headers: {
-      "apikey": SUPABASE_SERVICE_KEY,
-      "Authorization": `Bearer ${SUPABASE_SERVICE_KEY}`,
-    }
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/${SUPABASE_BOOKING_TABLE}?select=fra_dato,til_dato,status`, {
+      headers: {
+        "apikey": SUPABASE_SERVICE_KEY,
+        "Authorization": `Bearer ${SUPABASE_SERVICE_KEY}`,
+      }
     });
 
     const data = await res.json();
@@ -114,8 +110,7 @@ export default async function handler(req) {
           to: ["bookingansvarlig@eshyttekom.no", "finansforvalter@eshyttekom.no"],
           from: "finansforvalter@eshyttekom.no",
           subject: `Ny booking fra ${fornavn} ${etternavn}`,
-          text: `
-Ny booking mottatt:
+          text: `Ny booking mottatt:
 
 Navn: ${fornavn} ${etternavn}
 E-post: ${epost}
