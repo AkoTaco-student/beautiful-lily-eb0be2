@@ -112,7 +112,7 @@ export default async function handler(req) {
       try {
         await sgMail.send({
           to: ["bookingansvarlig@eshyttekom.no", "finansforvalter@eshyttekom.no"],
-          from: "noreply@eshyttekom.no",
+          from: "finansforvalter@eshyttekom.no",
           subject: `Ny booking fra ${fornavn} ${etternavn}`,
           text: `
 Ny booking mottatt:
