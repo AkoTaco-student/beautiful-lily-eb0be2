@@ -38,11 +38,11 @@ export default async function handler(req) {
 
   // Handle GET requests
   if (req.method === "GET") {
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/${SUPABASE_BOOKING_TABLE}?select=fra_dato,til_dato,status`, {
-      headers: {
-        "apikey": SUPABASE_SERVICE_KEY,
-        "Authorization": `Bearer ${SUPABASE_SERVICE_KEY}`,
-      }
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/${SUPABASE_BOOKING_TABLE}?select=fra_dato,til_dato,status&status=not.eq.cancelled`, {
+    headers: {
+      "apikey": SUPABASE_SERVICE_KEY,
+      "Authorization": `Bearer ${SUPABASE_SERVICE_KEY}`,
+    }
     });
 
     const data = await res.json();
