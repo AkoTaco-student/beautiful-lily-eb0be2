@@ -1,28 +1,15 @@
 {
-  "dependencies": {
-    "@sendgrid/mail": "^8.1.6"
-  },
-  "devDependencies": {
-    "autoprefixer": "^10.4.27",
-    "postcss": "^8.5.8",
-    "tailwindcss": "^4.2.2"
-  },
   "name": "eshyttekom_nettside",
   "version": "1.0.0",
   "description": "",
-  "main": "postcss.config.js",
+  "main": "bookinger.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/joakim-nordeng-moulia/eshyttekom_nettside.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/joakim-nordeng-moulia/eshyttekom_nettside/issues"
-  },
-  "homepage": "https://github.com/joakim-nordeng-moulia/eshyttekom_nettside#readme"
+  "dependencies": {
+    "nodemailer": "^8.0.5"
+  }
 }

@@ -332,11 +332,12 @@ let bookedePerioder = [];
 async function lastBookinger() {
   try {
     const res = await fetch(
-      `${SUPABASE_URL}/rest/v1/bookinger?select=fra_dato,til_dato&status=eq.confirmed`,
+      `${SUPABASE_URL}/rest/v1/bookinger?select=fra_dato,til_dato,status&status=eq.confirmed`,
       { headers: { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}` } }
     );
     if (res.ok) {
-      bookedePerioder = await res.json();
+      const data = await res.json();
+      bookedePerioder = data.filter(p => p.status === 'confirmed');
     }
   } catch (e) {
     console.warn('Kunne ikke laste bookinger:', e);
@@ -482,7 +483,11 @@ document.getElementById('cal-next').addEventListener('click', () => {
 
 // ── Gjestekounter ─────────────────────────────────────────────────────────
 let guests = 10;
+let calculatedPrice = null;
 const countEl = document.getElementById('guests-count');
+const hiddenPris = document.getElementById('hidden-pris');
+const hiddenPeriode = document.getElementById('hidden-periode');
+const hiddenGjester = document.getElementById('hidden-gjester');
 
 document.getElementById('guests-inc').addEventListener('click', () => {
   if (guests < 48) { guests++; countEl.textContent = guests; updatePrice(); }
@@ -504,13 +509,24 @@ function isWeekendPeriod(start, end) {
   return false;
 }
 
+function formatIsoDate(d) {
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
+
 function updatePrice() {
   const box     = document.getElementById('price-box');
   const details = document.getElementById('price-details');
   const total   = document.getElementById('price-total');
   const type    = document.getElementById('guest-type').value;
 
-  if (!startDate || !endDate || !type) { box.classList.add('hidden'); return; }
+  if (!startDate || !endDate || !type) {
+    calculatedPrice = null;
+    hiddenPris.value = '';
+    hiddenGjester.value = guests;
+    hiddenPeriode.value = '';
+    box.classList.add('hidden');
+    return;
+  }
 
   const nights  = Math.round((endDate - startDate) / 86400000);
   const weekend = isWeekendPeriod(startDate, endDate);
@@ -543,6 +559,10 @@ function updatePrice() {
 
   details.textContent = desc;
   total.textContent   = `Kr ${pris.toLocaleString('nb-NO')}`;
+  calculatedPrice = pris;
+  hiddenPris.value = pris;
+  hiddenGjester.value = guests;
+  hiddenPeriode.value = `${formatIsoDate(startDate)} → ${formatIsoDate(endDate)}`;
   box.classList.remove('hidden');
 }
 
@@ -567,7 +587,7 @@ document.getElementById('booking-form').addEventListener('submit', async functio
     fra_dato:       startDate ? fmt(startDate) : null,
     til_dato:       endDate   ? fmt(endDate)   : null,
     antall_gjester: guests,
-    beregnet_pris:  document.getElementById('price-total').textContent || null,
+    beregnet_pris:  calculatedPrice,
     kommentar:      document.querySelector('[name="kommentar"]').value.trim(),
   };
 
