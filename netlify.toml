@@ -1,9 +1,9 @@
 [build]
-  publish = "eshyttekom_nettside/eshyttekom_nettside"
+  publish = "eshyttekom_nettside"
   functions = "eshyttekom_nettside/netlify/functions"
 
 [dev]
-  publish = "eshyttekom_nettside/eshyttekom_nettside"
+  publish = "eshyttekom_nettside"
   functions = "eshyttekom_nettside/netlify/functions"
 
 [context.production.environment]
