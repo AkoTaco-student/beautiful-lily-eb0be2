@@ -1,36 +1,30 @@
-# netlify.toml
 [build]
-  # Optional: if you have a build command (e.g., for React, Next, or static site generators)
-  command = "npm run build"       # change or remove if you don't have a build step
-  publish = "eshyttekom_nettside" # your site's public folder
-  functions = "netlify/functions" # folder where your serverless functions live
+  publish = "eshyttekom_nettside"
+  functions = "netlify/functions"
 
 [dev]
-  # Local development settings
-  port = 8888
   publish = "eshyttekom_nettside"
   functions = "netlify/functions"
 
 [context.production.environment]
-  # Environment variables for production deploy
-  SUPABASE_URL = "YOUR_SUPABASE_URL"
-  SUPABASE_SERVICE_KEY = "YOUR_SUPABASE_SERVICE_KEY"
+  SUPABASE_URL = ""
+  SUPABASE_SERVICE_KEY = ""
   SUPABASE_BOOKING_TABLE = "bookinger"
   GMAIL_USER = "noreplyeshyttekom@gmail.com"
-  GMAIL_APP_PASSWORD = "YOUR_16_CHAR_APP_PASSWORD"
+  GMAIL_APP_PASSWORD = ""
+  
+  
 
 [context.deploy-preview.environment]
-  # Optional: variables for preview deploys
-  SUPABASE_URL = "YOUR_SUPABASE_URL"
-  SUPABASE_SERVICE_KEY = "YOUR_SUPABASE_SERVICE_KEY"
+  SUPABASE_URL = ""
+  SUPABASE_SERVICE_KEY = ""
   SUPABASE_BOOKING_TABLE = "bookinger"
   GMAIL_USER = "noreplyeshyttekom@gmail.com"
-  GMAIL_APP_PASSWORD = "YOUR_16_CHAR_APP_PASSWORD"
+  GMAIL_APP_PASSWORD = ""
 
 [context.branch-deploy.environment]
-  # Optional: variables for branch deploys
-  SUPABASE_URL = "YOUR_SUPABASE_URL"
-  SUPABASE_SERVICE_KEY = "YOUR_SUPABASE_SERVICE_KEY"
+  SUPABASE_URL = ""
+  SUPABASE_SERVICE_KEY = ""
   SUPABASE_BOOKING_TABLE = "bookinger"
   GMAIL_USER = "noreplyeshyttekom@gmail.com"
-  GMAIL_APP_PASSWORD = "YOUR_16_CHAR_APP_PASSWORD"
+  GMAIL_APP_PASSWORD = ""

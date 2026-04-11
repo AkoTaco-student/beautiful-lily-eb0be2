@@ -1,3 +1,20 @@
+import sgMail from "@sendgrid/mail";
+
+// Allowed origins for CORS
+const allowedOrigins = [
+  "https://statuesque-marzipan-20a8ac.netlify.app",
+  "https://eshyttekom.no",
+  "https://admirable-belekoy-28489f.netlify.app",
+  "https://tourmaline-jalebi-3028e4.netlify.app",
+  "https://beautiful-lily-eb0be2.netlify.app",
+];
+
+
+// Init SendGrid
+if (process.env.SENDGRID_API_KEY) {
+  sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+}
+
 export default async function handler(req) {
   const headers = {
     "Access-Control-Allow-Origin": "*",
@@ -19,7 +36,12 @@ export default async function handler(req) {
     return new Response(`Mangler env: ${missing.join(", ")}`, { status: 500, headers });
   }
 
-  // --- GET: hent bookinger ---
+  // --- Handle OPTIONS preflight ---
+  if (req.method === "OPTIONS") {
+    return new Response(null, { status: 200, headers });
+  }
+
+  // --- Handle GET ---
   if (req.method === "GET") {
     const res = await fetch(
       `${SUPABASE_URL}/rest/v1/bookinger?select=fra_dato,til_dato,status`,
@@ -36,7 +58,7 @@ export default async function handler(req) {
     });
   }
 
-  // --- POST: ny booking ---
+  // --- Handle POST ---
   if (req.method === "POST") {
     let data;
     try {
@@ -62,8 +84,8 @@ export default async function handler(req) {
       return new Response("Mangler påkrevde felt", { status: 400, headers });
     }
 
-    // --- Lagre i Supabase ---
-    const bookingRes = await fetch(`${SUPABASE_URL}/rest/v1/bookinger`, {
+    // --- Save booking ---
+    const bookingRes = await fetch(`${SUPABASE_URL}/rest/v1/${SUPABASE_BOOKING_TABLE}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -90,7 +112,38 @@ export default async function handler(req) {
       let err = await bookingRes.text();
       try { err = JSON.parse(err).message || err; } catch {}
       console.error("Supabase feil:", err);
-      return new Response(`Feil ved lagring: ${err}`, { status: 500, headers });
+      return new Response(`Feil ved lagring av booking: ${err}`, { status: 500, headers });
+    }
+
+    // --- Email content ---
+    const emailText = `
+Ny booking mottatt:
+
+Navn: ${fornavn} ${etternavn}
+E-post: ${epost}
+Telefon: ${telefon || "-"}
+Type gjest: ${type_gjest}
+Fra: ${fra_dato || "-"} Til: ${til_dato || "-"}
+Antall gjester: ${antall_gjester || "-"}
+Beregnet pris: ${beregnet_pris || "-"}
+Kommentar: ${kommentar || "-"}
+    `;
+
+    try {
+      await sgMail.send({
+        to: [
+          "finansforvalter@eshyttekom.no",
+          "hovmester@eshyttekom.no"
+        ],
+        from: "noreplyeshyttekom@gmail.com", // må være verifisert i SendGrid
+        replyTo: epost,
+        subject: `Ny booking fra ${fornavn} ${etternavn}`,
+        text: emailText,
+      });
+
+    } catch (err) {
+      console.error("SendGrid feil:", err.response?.body || err.message);
+      // Ikke stopp booking selv om mail feiler
     }
 
     return new Response(JSON.stringify({ ok: true }), {
