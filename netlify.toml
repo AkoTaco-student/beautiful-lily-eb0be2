@@ -1,10 +1,10 @@
 [build]
   publish = "eshyttekom_nettside/eshyttekom_nettside"
-  functions = "eshyttekom_nettside/netlify/functions""
+  functions = "eshyttekom_nettside/netlify/functions"
 
 [dev]
   publish = "eshyttekom_nettside/eshyttekom_nettside"
-  functions = "eshyttekom_nettside/netlify/functions""
+  functions = "eshyttekom_nettside/netlify/functions"
 
 [context.production.environment]
   SUPABASE_URL = ""
