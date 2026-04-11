@@ -13,6 +13,7 @@
   GMAIL_USER = "noreplyeshyttekom@gmail.com"
   GMAIL_APP_PASSWORD = ""
   
+  
 
 [context.deploy-preview.environment]
   SUPABASE_URL = ""
