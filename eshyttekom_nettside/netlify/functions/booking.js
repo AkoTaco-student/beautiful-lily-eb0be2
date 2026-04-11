@@ -9,6 +9,7 @@ const allowedOrigins = [
   "https://beautiful-lily-eb0be2.netlify.app",
 ];
 
+
 // Init SendGrid
 if (process.env.SENDGRID_API_KEY) {
   sgMail.setApiKey(process.env.SENDGRID_API_KEY);
