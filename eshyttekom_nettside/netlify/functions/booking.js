@@ -14,7 +14,6 @@ const allowedOrigins = [
 if (process.env.SENDGRID_API_KEY) {
   sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 }
-
 export default async function handler(req) {
   const headers = {
     "Access-Control-Allow-Origin": "*",
@@ -28,10 +27,11 @@ export default async function handler(req) {
 
   const SUPABASE_URL = process.env.SUPABASE_URL;
   const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY;
-
+  const SUPABASE_BOOKING_TABLE = process.env.SUPABASE_BOOKING_TABLE;
   const missing = [];
   if (!SUPABASE_URL) missing.push("SUPABASE_URL");
   if (!SUPABASE_SERVICE_KEY) missing.push("SUPABASE_SERVICE_KEY");
+  if (!SUPABASE_BOOKING_TABLE) missing.push("SUPABASE_BOOKING_TABLE");
   if (missing.length) {
     return new Response(`Mangler env: ${missing.join(", ")}`, { status: 500, headers });
   }
