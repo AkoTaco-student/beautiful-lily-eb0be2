@@ -1,19 +1,25 @@
-import nodemailer from "nodemailer";
+import sgMail from "@sendgrid/mail";
 
 // Allowed origins for CORS
 const allowedOrigins = [
   "https://statuesque-marzipan-20a8ac.netlify.app",
   "https://eshyttekom.no",
   "https://admirable-belekoy-28489f.netlify.app",
-  "https://tourmaline-jalebi-3028e4.netlify.app"
+  "https://tourmaline-jalebi-3028e4.netlify.app",
+  "https://beautiful-lily-eb0be2.netlify.app",
 ];
+
+// Init SendGrid
+if (process.env.SENDGRID_API_KEY) {
+  sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+}
 
 export default async function handler(req) {
   const origin = req.headers.origin;
 
   // --- CORS headers ---
   const headers = {
-    "Access-Control-Allow-Origin": "*", // Replace "*" with origin to restrict
+    "Access-Control-Allow-Origin": "*",
     "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
     "Access-Control-Allow-Headers": "Content-Type, Authorization",
   };
@@ -37,7 +43,7 @@ export default async function handler(req) {
     return new Response(null, { status: 200, headers });
   }
 
-  // --- Handle GET: return bookings ---
+  // --- Handle GET ---
   if (req.method === "GET") {
     const res = await fetch(`${SUPABASE_URL}/rest/v1/${SUPABASE_BOOKING_TABLE}?select=fra_dato,til_dato,status`, {
       headers: {
@@ -51,7 +57,7 @@ export default async function handler(req) {
     });
   }
 
-  // --- Handle POST: new booking ---
+  // --- Handle POST ---
   if (req.method === "POST") {
     let data;
     try {
@@ -77,7 +83,7 @@ export default async function handler(req) {
       return new Response("Mangler påkrevde felt", { status: 400, headers });
     }
 
-    // --- Save booking to Supabase ---
+    // --- Save booking ---
     const bookingRes = await fetch(`${SUPABASE_URL}/rest/v1/${SUPABASE_BOOKING_TABLE}`, {
       method: "POST",
       headers: {
@@ -108,27 +114,6 @@ export default async function handler(req) {
       return new Response(`Feil ved lagring av booking: ${err}`, { status: 500, headers });
     }
 
-    // --- Gmail SMTP setup for sending emails ---
-    const transporterFinans = nodemailer.createTransport({
-      host: "smtp.gmail.com",
-      port: 465,
-      secure: true,
-      auth: {
-        user: "noreplyeshyttekom@gmail.com", // <-- your Gmail login
-        pass: process.env.GMAIL_APP_PASSWORD, // <-- 16-char app password
-      },
-    });
-
-    const transporterHovmester = nodemailer.createTransport({
-      host: "smtp.gmail.com",
-      port: 465,
-      secure: true,
-      auth: {
-        user: "noreplyeshyttekom@gmail.com", // same Gmail login
-        pass: process.env.GMAIL_APP_PASSWORD, // same app password
-      },
-    });
-
     // --- Email content ---
     const emailText = `
 Ny booking mottatt:
@@ -144,27 +129,20 @@ Kommentar: ${kommentar || "-"}
     `;
 
     try {
-      // Send to finansforvalter
-      await transporterFinans.sendMail({
-        from: "noreplyeshyttekom@gmail.com",
-        to: "finansforvalter@eshyttekom.no",
-        replyTo: epost,
-        subject: `Ny booking fra ${fornavn} ${etternavn}`,
-        text: emailText,
-      });
-
-      // Send to hovmester
-      await transporterHovmester.sendMail({
-        from: "noreplyeshyttekom@gmail.com",
-        to: "hovmester@eshyttekom.no",
+      await sgMail.send({
+        to: [
+          "finansforvalter@eshyttekom.no",
+          "hovmester@eshyttekom.no"
+        ],
+        from: "noreplyeshyttekom@gmail.com", // må være verifisert i SendGrid
         replyTo: epost,
         subject: `Ny booking fra ${fornavn} ${etternavn}`,
         text: emailText,
       });
 
     } catch (err) {
-      console.error("Gmail SMTP feil:", err);
-      // Continue without breaking booking storage
+      console.error("SendGrid feil:", err.response?.body || err.message);
+      // Ikke stopp booking selv om mail feiler
     }
 
     return new Response(JSON.stringify({ ok: true }), {

@@ -587,7 +587,7 @@ document.getElementById('booking-form').addEventListener('submit', async functio
     fra_dato:       startDate ? fmt(startDate) : null,
     til_dato:       endDate   ? fmt(endDate)   : null,
     antall_gjester: guests,
-    beregnet_pris:  calculatedPrice,
+    beregnet_pris: parseInt(calculatedPrice) || null,
     kommentar:      document.querySelector('[name="kommentar"]').value.trim(),
   };
 
