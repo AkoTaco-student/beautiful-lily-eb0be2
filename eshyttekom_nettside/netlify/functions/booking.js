@@ -7,6 +7,7 @@ const allowedOrigins = [
   "https://admirable-belekoy-28489f.netlify.app",
   "https://tourmaline-jalebi-3028e4.netlify.app",
   "https://beautiful-lily-eb0be2.netlify.app",
+  "https://dulcet-croissant-f61a7f.netlify.app"
 ];
 
 
@@ -132,8 +133,8 @@ Kommentar: ${kommentar || "-"}
     try {
       await sgMail.send({
         to: [
-          "finansforvalter@eshyttekom.no",
-          "hovmester@eshyttekom.no"
+          "akosn250@gmail.com",
+          "noreplyeshyttekom@gmail.com"
         ],
         from: "noreplyeshyttekom@gmail.com", // må være verifisert i SendGrid
         replyTo: epost,
