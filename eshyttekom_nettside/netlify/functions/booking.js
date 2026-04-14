@@ -1,4 +1,4 @@
-import sgMail from "@sendgrid/mail";
+import nodemailer from "nodemailer";
 
 // Allowed origins for CORS
 const allowedOrigins = [
@@ -11,10 +11,9 @@ const allowedOrigins = [
 ];
 
 
-// Init SendGrid
-if (process.env.SENDGRID_API_KEY) {
-  sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-}
+
+
+
 export default async function handler(req) {
   const headers = {
     "Access-Control-Allow-Origin": "*",
@@ -130,22 +129,35 @@ Beregnet pris: ${beregnet_pris || "-"}
 Kommentar: ${kommentar || "-"}
     `;
 
-    try {
-      await sgMail.send({
-        to: [
-          "akosn250@gmail.com",
-          "noreplyeshyttekom@gmail.com"
-        ],
-        from: "noreplyeshyttekom@gmail.com", // må være verifisert i SendGrid
-        replyTo: epost,
-        subject: `Ny booking fra ${fornavn} ${etternavn}`,
-        text: emailText,
-      });
+    const transporter = nodemailer.createTransport({
+    host: "smtp-relay.gmail.com",
+    port: 587,
+    secure: false,
+    auth: {
+      user: process.env.SMTP_USER,
+      pass: process.env.SMTP_PASS,
+    },
+    tls: {
+      rejectUnauthorized: false,
+    },
+  });
 
-    } catch (err) {
-      console.error("SendGrid feil:", err.response?.body || err.message);
-      // Ikke stopp booking selv om mail feiler
-    }
+  try {
+    await transporter.sendMail({
+      from: `"Eshyttekom" <noreply@eshyttekom.no>`,
+      to: [
+        "akosn250@gmail.com",
+        "noreplyeshyttekom@gmail.com"
+      ],
+      replyTo: epost,
+      subject: `Ny booking fra ${fornavn} ${etternavn}`,
+      text: emailText,
+    });
+
+  } catch (err) {
+    console.error("Google SMTP feil:", err.message);
+    // Ikke stopp booking selv om mail feiler
+  }
 
     return new Response(JSON.stringify({ ok: true }), {
       status: 200,
