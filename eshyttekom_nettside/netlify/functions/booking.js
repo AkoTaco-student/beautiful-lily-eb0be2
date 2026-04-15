@@ -146,6 +146,7 @@ Kommentar: ${kommentar || "-"}
         "noreplyeshyttekom@gmail.com"
       ],
       replyTo: epost,
+      returnPath: "noreply@eshyttekom.no",
       subject: `Ny booking fra ${fornavn} ${etternavn}`,
       text: emailText,
     });
