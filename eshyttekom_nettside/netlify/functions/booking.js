@@ -129,32 +129,33 @@ Beregnet pris: ${beregnet_pris || "-"}
 Kommentar: ${kommentar || "-"}
     `;
 
-    const transporter = nodemailer.createTransport({
-    host: "smtp-relay.gmail.com",
-    port: 587,
-    secure: false,
-    tls: {
-      rejectUnauthorized: false,
+    
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: process.env.GMAIL_USER,
+      pass: process.env.GMAIL_APP_PASSWORD,
     },
   });
 
+
   try {
     await transporter.sendMail({
-      from: `"Eshyttekom" <noreply@eshyttekom.no>`,
+      from: `"Eshyttekom" <${process.env.GMAIL_USER}>`,
       to: [
         "akosn250@gmail.com",
         "noreplyeshyttekom@gmail.com"
       ],
       replyTo: epost,
-      returnPath: "noreply@eshyttekom.no",
+      
       subject: `Ny booking fra ${fornavn} ${etternavn}`,
       text: emailText,
     });
 
   } catch (err) {
-    console.error("Google SMTP feil:", err.message);
-    // Ikke stopp booking selv om mail feiler
+    console.error("Google SMTP full error:", err);
   }
+
 
     return new Response(JSON.stringify({ ok: true }), {
       status: 200,
