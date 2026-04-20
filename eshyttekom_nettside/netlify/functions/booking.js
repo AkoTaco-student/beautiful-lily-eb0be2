@@ -144,7 +144,9 @@ Kommentar: ${kommentar || "-"}
       from: `"Eshyttekom" <${process.env.GMAIL_USER}>`,
       to: [
         "akosn250@gmail.com",
-        "noreplyeshyttekom@gmail.com"
+        "noreplyeshyttekom@gmail.com",
+        "hovmester@eshyttekom.no",
+        "finansforvalter@eshyttekom.no",
       ],
       replyTo: epost,
       
