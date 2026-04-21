@@ -143,8 +143,6 @@ Kommentar: ${kommentar || "-"}
     await transporter.sendMail({
       from: `"Eshyttekom" <${process.env.GMAIL_USER}>`,
       to: [
-        "akosn250@gmail.com",
-        "noreplyeshyttekom@gmail.com",
         "hovmester@eshyttekom.no",
         "finansforvalter@eshyttekom.no",
       ],
@@ -167,3 +165,4 @@ Kommentar: ${kommentar || "-"}
 
   return new Response("Method not allowed", { status: 405, headers });
 }
+
