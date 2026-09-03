@@ -91,7 +91,7 @@ export default async function handler(req) {
         "Content-Type": "application/json",
         apikey: SUPABASE_SERVICE_KEY,
         Authorization: `Bearer ${SUPABASE_SERVICE_KEY}`,
-        Prefer: "return=minimal",
+        Prefer: "return=representation",
       },
       body: JSON.stringify({
         fornavn,
@@ -115,10 +115,22 @@ export default async function handler(req) {
       return new Response(`Feil ved lagring av booking: ${err}`, { status: 500, headers });
     }
 
+    let bookingId = "-";
+    try {
+      const createdBookings = await bookingRes.json();
+      // Supabase returns an array for bulk insertions, grab the first element
+      if (Array.isArray(createdBookings) && createdBookings.length > 0) {
+        bookingId = createdBookings[0].id; 
+      }
+    } catch (parseErr) {
+      console.error("Klarte ikke å hente ut booking ID:", parseErr);
+    }
+
     // --- Email content ---
     const emailText = `
 Ny booking mottatt:
 
+Booking-ID (Supabase): ${bookingId}
 Navn: ${fornavn} ${etternavn}
 E-post: ${epost}
 Telefon: ${telefon || "-"}
