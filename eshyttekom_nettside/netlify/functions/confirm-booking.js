@@ -11,7 +11,6 @@ function jsonResponse(body, status = 200) {
   });
 }
 
-
 function safeTokenEquals(received, expected) {
   if (!received || !expected) return false;
 
