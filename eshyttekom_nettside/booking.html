@@ -234,33 +234,33 @@ document.getElementById('mobile-menu-btn').addEventListener('click', function() 
 <p class="font-label text-xs uppercase tracking-widest text-secondary font-bold mb-3">Undervisningsperiode</p>
 <div class="flex justify-between text-on-surface-variant">
 <span>Interne — helg (min. 10 pers)</span>
-<span class="font-bold text-on-surface">Kr 2 500–6 250</span>
+<span class="font-bold text-on-surface">Kr 2 800–7 000</span>
 </div>
 <div class="flex justify-between text-on-surface-variant">
 <span>Interne — ukedag (per pers)</span>
-<span class="font-bold text-on-surface">Max kr 3 125</span>
+<span class="font-bold text-on-surface">Max kr 3 500</span>
 </div>
 <div class="flex justify-between text-on-surface-variant">
 <span>Eksterne — helg (hele hytta)</span>
-<span class="font-bold text-on-surface">Kr 12 500</span>
+<span class="font-bold text-on-surface">Kr 14 000</span>
 </div>
 <div class="flex justify-between text-on-surface-variant">
 <span>Eksterne — ukedag (min. 10 pers)</span>
-<span class="font-bold text-on-surface">Kr 2 500–6 250</span>
+<span class="font-bold text-on-surface">Kr 2 800–7 000</span>
 </div>
 <div class="h-px bg-outline-variant/30 my-2"></div>
 <p class="font-label text-xs uppercase tracking-widest text-secondary font-bold mb-3">Eksamen &amp; Ferie</p>
 <div class="flex justify-between text-on-surface-variant">
 <span>Interne — helg/ukedag (per pers)</span>
-<span class="font-bold text-on-surface">Max kr 3 125</span>
+<span class="font-bold text-on-surface">Max kr 3 500</span>
 </div>
 <div class="flex justify-between text-on-surface-variant">
 <span>Eksterne — helg (min. 10 pers)</span>
-<span class="font-bold text-on-surface">Kr 5 000–12 500</span>
+<span class="font-bold text-on-surface">Kr 5 600–14 000</span>
 </div>
 <div class="flex justify-between text-on-surface-variant">
 <span>Eksterne — ukedag (min. 10 pers)</span>
-<span class="font-bold text-on-surface">Kr 2 500–6 250</span>
+<span class="font-bold text-on-surface">Kr 2 800–7 000</span>
 </div>
 <div class="flex justify-between font-headline text-xl pt-3 border-t border-outline-variant/30">
 <span>Kontakt for endelig pris</span>
@@ -535,25 +535,25 @@ function updatePrice() {
 
   if (type === 'intern') {
     if (weekend) {
-      // 250 kr/person, min 2500, max 6250
-      pris = Math.min(Math.max(guests * 250, 2500), 6250);
-      desc = `Intern helg · ${guests} pers × 250 kr (min 2 500, max 6 250)`;
+      // 280 kr/person, min 2800, max 7000
+      pris = Math.min(Math.max(guests * 250 * 1.12, 2500*1.12), 6250*1.12);
+      desc = `Intern helg · ${guests} pers × 280 kr (min 2 800, max 7 000)`;
     } else {
-      // 125 kr/person/natt, max 3125/natt
-      const perNight = Math.min(guests * 125, 3125);
+      // 140 kr/person/natt, max 3500/natt
+      const perNight = Math.min(guests * 125 * 1.12, 3125 * 1.12);
       pris = perNight * nights;
-      desc = `Intern ukedag · ${guests} pers × 125 kr × ${nights} natt${nights>1?'er':''}`;
+      desc = `Intern ukedag · ${guests} pers × 140 kr × ${nights} natt${nights>1?'er':''}`;
     }
   } else {
     if (weekend) {
-      // Flat 12500 kr
-      pris = 12500;
+      // Flat 14000 kr
+      pris = 12500 * 1.12;
       desc = `Ekstern helg · flat pris`;
     } else {
-      // 250 kr/person/natt, min 2500, max 6250/natt
-      const perNight = Math.min(Math.max(guests * 250, 2500), 6250);
+      // 280 kr/person/natt, min 2800, max 7000/natt
+      const perNight = Math.min(Math.max(guests * 250 * 1.12, 2500*1.12), 6250*1.12);
       pris = perNight * nights;
-      desc = `Ekstern ukedag · ${guests} pers × 250 kr × ${nights} natt${nights>1?'er':''}`;
+      desc = `Ekstern ukedag · ${guests} pers × 280 kr × ${nights} natt${nights>1?'er':''}`;
     }
   }
 
