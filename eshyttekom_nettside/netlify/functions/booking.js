@@ -32,6 +32,8 @@ export default async function handler(req) {
   if (!SUPABASE_URL) missing.push("SUPABASE_URL");
   if (!SUPABASE_SERVICE_KEY) missing.push("SUPABASE_SERVICE_KEY");
   if (!SUPABASE_BOOKING_TABLE) missing.push("SUPABASE_BOOKING_TABLE");
+  if (!process.env.GMAIL_USER) missing.push("GMAIL_USER");
+  if (!process.env.GMAIL_APP_PASSWORD) missing.push("GMAIL_APP_PASSWORD");
   if (missing.length) {
     return new Response(`Mangler env: ${missing.join(", ")}`, { status: 500, headers });
   }
@@ -165,8 +167,19 @@ Kommentar: ${kommentar || "-"}
     });
 
   } catch (err) {
-    console.error("Google SMTP full error:", err);
-  }
+  console.error("Google SMTP full error:", err);
+
+  return new Response(
+    JSON.stringify({
+      ok: false,
+      error: "Bookingen ble lagret, men bookingmailen kunne ikke sendes."
+    }),
+    {
+      status: 500,
+      headers: { "Content-Type": "application/json", ...headers },
+    }
+  );
+}
 
 
     return new Response(JSON.stringify({ ok: true }), {
