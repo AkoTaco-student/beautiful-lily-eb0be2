@@ -154,7 +154,6 @@ document.getElementById('mobile-menu-btn').addEventListener('click', function() 
 <form id="booking-form" class="space-y-8" name="booking" data-netlify="true">
 <input type="hidden" name="form-name" value="booking"/>
 <input type="hidden" id="hidden-periode" name="periode"/>
-<input type="hidden" id="hidden-gjester" name="antall_gjester"/>
 <input type="hidden" id="hidden-pris" name="beregnet_pris"/>
 
 <h2 class="font-headline text-3xl">Gjesteinformasjon</h2>
@@ -184,8 +183,63 @@ document.getElementById('mobile-menu-btn').addEventListener('click', function() 
 </select>
 </div>
 <div class="space-y-2 md:col-span-2">
+<label for="guest-count" class="font-label text-xs uppercase tracking-widest text-secondary font-bold">Antall gjester</label>
+<select id="guest-count" name="antall_gjester" required aria-describedby="guest-count-help" class="w-full bg-surface-container-high border-none p-4 text-base rounded-lg focus:ring-1 focus:ring-primary focus:bg-surface-container-highest transition-all outline-none">
+<option value="">Velg antall gjester</option>
+<option value="1">1 gjest</option>
+<option value="2">2 gjester</option>
+<option value="3">3 gjester</option>
+<option value="4">4 gjester</option>
+<option value="5">5 gjester</option>
+<option value="6">6 gjester</option>
+<option value="7">7 gjester</option>
+<option value="8">8 gjester</option>
+<option value="9">9 gjester</option>
+<option value="10">10 gjester</option>
+<option value="11">11 gjester</option>
+<option value="12">12 gjester</option>
+<option value="13">13 gjester</option>
+<option value="14">14 gjester</option>
+<option value="15">15 gjester</option>
+<option value="16">16 gjester</option>
+<option value="17">17 gjester</option>
+<option value="18">18 gjester</option>
+<option value="19">19 gjester</option>
+<option value="20">20 gjester</option>
+<option value="21">21 gjester</option>
+<option value="22">22 gjester</option>
+<option value="23">23 gjester</option>
+<option value="24">24 gjester</option>
+<option value="25">25 gjester</option>
+<option value="26">26 gjester</option>
+<option value="27">27 gjester</option>
+<option value="28">28 gjester</option>
+<option value="29">29 gjester</option>
+<option value="30">30 gjester</option>
+<option value="31">31 gjester</option>
+<option value="32">32 gjester</option>
+<option value="33">33 gjester</option>
+<option value="34">34 gjester</option>
+<option value="35">35 gjester</option>
+<option value="36">36 gjester</option>
+<option value="37">37 gjester</option>
+<option value="38">38 gjester</option>
+<option value="39">39 gjester</option>
+<option value="40">40 gjester</option>
+<option value="41">41 gjester</option>
+<option value="42">42 gjester</option>
+<option value="43">43 gjester</option>
+<option value="44">44 gjester</option>
+<option value="45">45 gjester</option>
+<option value="46">46 gjester</option>
+<option value="47">47 gjester</option>
+<option value="48">48 gjester</option>
+</select>
+<p id="guest-count-help" class="text-sm text-on-surface-variant">Hvor mange personer skal være med på oppholdet? Velg fra 1 til 48 gjester.</p>
+</div>
+<div class="space-y-2 md:col-span-2">
 <label class="font-label text-xs uppercase tracking-widest text-secondary font-bold">Kommentar (valgfritt)</label>
-<textarea name="kommentar" class="w-full bg-surface-container-high border-none p-4 rounded-lg focus:ring-1 focus:ring-primary focus:bg-surface-container-highest transition-all outline-none h-28" placeholder="Antall gjester, ønsker, spørsmål..."></textarea>
+<textarea name="kommentar" class="w-full bg-surface-container-high border-none p-4 rounded-lg focus:ring-1 focus:ring-primary focus:bg-surface-container-highest transition-all outline-none h-28" placeholder="Ønsker, spørsmål eller annen informasjon..."></textarea>
 </div>
 </div>
 
@@ -219,17 +273,6 @@ document.getElementById('mobile-menu-btn').addEventListener('click', function() 
 </div>
 </div>
 <div class="p-8 md:p-10 space-y-8">
-<div class="space-y-6">
-<div class="flex justify-between items-center">
-<span class="font-label text-sm uppercase tracking-wider text-on-surface-variant">Antall gjester</span>
-<div class="flex items-center space-x-4">
-<button id="guests-dec" class="w-8 h-8 rounded-full border border-outline-variant flex items-center justify-center hover:bg-surface-container-high transition-colors">-</button>
-<span id="guests-count" class="font-body font-bold w-6 text-center">10</span>
-<button id="guests-inc" class="w-8 h-8 rounded-full border border-outline-variant flex items-center justify-center hover:bg-surface-container-high transition-colors">+</button>
-</div>
-</div>
-</div>
-<div class="h-px bg-outline-variant/30"></div>
 <div class="space-y-3 text-sm">
 <p class="font-label text-xs uppercase tracking-widest text-secondary font-bold mb-3">Undervisningsperiode</p>
 <div class="flex justify-between text-on-surface-variant">
@@ -481,19 +524,16 @@ document.getElementById('cal-next').addEventListener('click', () => {
   renderCalendar();
 });
 
-// ── Gjestekounter ─────────────────────────────────────────────────────────
-let guests = 10;
+// ── Antall gjester ─────────────────────────────────────────────────────────
+const guestCount = document.getElementById('guest-count');
+let guests = Number(guestCount.value);
 let calculatedPrice = null;
-const countEl = document.getElementById('guests-count');
 const hiddenPris = document.getElementById('hidden-pris');
 const hiddenPeriode = document.getElementById('hidden-periode');
-const hiddenGjester = document.getElementById('hidden-gjester');
 
-document.getElementById('guests-inc').addEventListener('click', () => {
-  if (guests < 48) { guests++; countEl.textContent = guests; updatePrice(); }
-});
-document.getElementById('guests-dec').addEventListener('click', () => {
-  if (guests > 1) { guests--; countEl.textContent = guests; updatePrice(); }
+guestCount.addEventListener('change', () => {
+  guests = Number(guestCount.value);
+  updatePrice();
 });
 
 document.getElementById('guest-type').addEventListener('change', updatePrice);
@@ -519,10 +559,9 @@ function updatePrice() {
   const total   = document.getElementById('price-total');
   const type    = document.getElementById('guest-type').value;
 
-  if (!startDate || !endDate || !type) {
+  if (!startDate || !endDate || !type || !guests) {
     calculatedPrice = null;
     hiddenPris.value = '';
-    hiddenGjester.value = guests;
     hiddenPeriode.value = '';
     box.classList.add('hidden');
     return;
@@ -561,7 +600,6 @@ function updatePrice() {
   total.textContent   = `Kr ${pris.toLocaleString('nb-NO')}`;
   calculatedPrice = pris;
   hiddenPris.value = pris;
-  hiddenGjester.value = guests;
   hiddenPeriode.value = `${formatIsoDate(startDate)} → ${formatIsoDate(endDate)}`;
   box.classList.remove('hidden');
 }
