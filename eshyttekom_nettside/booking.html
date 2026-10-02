@@ -83,22 +83,22 @@
             background-color: #fbf9f4;
             color: #1b1c19;
         }
-        .calendar-dot { width: 14px; height: 3px; border-radius: 2px; position: absolute; bottom: 6px; }
-        .calendar-dot-standard { background: #3f805b; }
-        .calendar-dot-flexible { background: #bd8c32; }
+        .calendar-dot { width: 18px; height: 5px; border-radius: 2px; position: absolute; bottom: 6px; z-index: 2; }
+        .calendar-dot-standard { background: #23784b; }
+        .calendar-dot-flexible { background: #dda900; }
         .calendar-dot-unknown { background: #747872; }
-        .calendar-legend-dot { display: inline-block; width: 14px; height: 3px; border-radius: 2px; flex-shrink: 0; }
-        .calendar-day-number { position: relative; z-index: 1; display: flex; align-items: center; justify-content: center; min-width: 26px; height: 26px; }
-        .calendar-turnover {
-            --morning: #f5f7f2; --afternoon: #f5f7f2;
-            background-image: linear-gradient(135deg, var(--morning) 0%, var(--morning) calc(50% - 1.5px), #fbf9f4 calc(50% - 1.5px), #fbf9f4 calc(50% + 1.5px), var(--afternoon) calc(50% + 1.5px), var(--afternoon) 100%);
-            border: 1px solid #d9dfd6;
-        }
+        .calendar-legend-dot { display: inline-block; width: 18px; height: 5px; border-radius: 2px; flex-shrink: 0; }
+        .calendar-rate-standard { background: #edf5ef; }
+        .calendar-rate-flexible { background: #fff5d8; }
+        .calendar-day-number { position: relative; z-index: 2; display: flex; align-items: center; justify-content: center; min-width: 26px; height: 26px; }
+        .calendar-turnover { --free: #edf5ef; --morning: var(--free); --afternoon: var(--free); background: transparent; color: #1b1c19; }
+        .calendar-turnover.calendar-rate-flexible { --free: #fff5d8; }
         .calendar-arrival { --afternoon: #f2d7d5; }
         .calendar-departure { --morning: #f2d7d5; }
-        .calendar-turnover .calendar-day-number { background: rgba(251, 249, 244, 0.9); border-radius: 50%; }
-        .calendar-turnover.calendar-selected { box-shadow: inset 0 0 0 2px #182519; }
-        .calendar-turnover.calendar-selected .calendar-day-number { background: #182519; color: #fff; }
+        .calendar-parts { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+        .calendar-morning { fill: var(--morning); }
+        .calendar-afternoon { fill: var(--afternoon); }
+        .calendar-turnover.calendar-selected { background: transparent; color: #1b1c19; box-shadow: inset 0 0 0 2px #182519; }
         .calendar-unavailable { background: #f2d7d5; color: #99534e; }
         .calendar-booked-swatch { display: inline-block; width: 13px; height: 13px; border-radius: 4px; background: #f2d7d5; border: 1px solid #dfb7b3; flex-shrink: 0; }
         .calendar-turnover-swatch { display: inline-block; width: 18px; height: 18px; border-radius: 5px; flex-shrink: 0; }
@@ -169,14 +169,14 @@ document.getElementById('mobile-menu-btn').addEventListener('click', function() 
 </div>
 <div id="cal-grid" class="grid grid-cols-7 gap-1"></div>
 <div class="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-xs text-on-surface-variant" aria-label="Kalenderforklaring">
-<span class="inline-flex items-center gap-2"><span class="calendar-legend-dot bg-[#3f805b]" aria-hidden="true"></span>Vanlig helg (fre–søn)</span>
-<span class="inline-flex items-center gap-2"><span class="calendar-legend-dot bg-[#bd8c32]" aria-hidden="true"></span>Fleksibel pris</span>
+<span class="inline-flex items-center gap-2"><span class="calendar-legend-dot bg-[#23784b]" aria-hidden="true"></span>Vanlig helg (fre–søn)</span>
+<span class="inline-flex items-center gap-2"><span class="calendar-legend-dot bg-[#dda900]" aria-hidden="true"></span>Fleksibel pris</span>
 <span class="inline-flex items-center gap-2"><span class="calendar-booked-swatch" aria-hidden="true"></span>Opptatt</span>
 <span class="inline-flex items-center gap-2"><span class="calendar-legend-dot bg-[#747872]" aria-hidden="true"></span>Pris avklares</span>
-<span class="inline-flex items-center gap-2"><span class="calendar-turnover calendar-arrival calendar-turnover-swatch" aria-hidden="true"></span>Byttedag – delvis ledig</span>
+<span class="inline-flex items-center gap-2"><svg class="calendar-turnover calendar-arrival calendar-turnover-swatch" viewBox="0 0 100 100" aria-hidden="true"><path class="calendar-morning" d="M 9 4 H 87 Q 92 4 88 8 L 8 88 Q 4 92 4 87 V 9 Q 4 4 9 4 Z"/><path class="calendar-afternoon" d="M 91 96 H 13 Q 8 96 12 92 L 92 12 Q 96 8 96 13 V 91 Q 96 96 91 96 Z"/></svg>Byttedag – delvis ledig</span>
 </div>
 <p class="mt-3 text-xs leading-relaxed text-on-surface-variant">Velg innsjekk og utsjekk. Grønn markering viser vanlig helg, fredag–søndag. Helgeprisen dekker fredag og lørdag natt. Utsjekksdagen telles ikke som en overnatting.</p>
-<p class="mt-2 text-xs leading-relaxed text-on-surface-variant">En delt rute viser byttedag: øvre venstre del er tiden frem til utsjekk kl. 14, og nedre høyre del er tiden fra innsjekk kl. 16. Rød del er opptatt, lys del er ledig.</p>
+<p class="mt-2 text-xs leading-relaxed text-on-surface-variant">En delt rute viser byttedag: øvre venstre del er tiden frem til utsjekk kl. 14, og nedre høyre del er tiden fra innsjekk kl. 16. Rød del er opptatt, lys del er ledig. På ankomstdagen kan dere også velge utsjekk først og deretter en tidligere innsjekksdato.</p>
 <p id="cal-selection" class="mt-4 text-sm text-secondary font-label font-bold text-center min-h-[1.5rem]" aria-live="polite"></p>
 <div class="mt-3 text-center"><button type="button" id="cal-clear" class="text-sm text-primary underline underline-offset-4 py-2 px-3 disabled:opacity-40 disabled:cursor-not-allowed">Tøm datovalget</button></div>
 </section>
@@ -316,7 +316,7 @@ document.getElementById('mobile-menu-btn').addEventListener('click', function() 
 <p class="text-xs text-on-surface-variant">To netter: 3&nbsp;500&nbsp;kr per natt for interne og 7&nbsp;000&nbsp;kr per natt for eksterne.</p>
 </section>
 <section class="rounded-lg bg-secondary-fixed/35 p-5 space-y-4" aria-labelledby="flexible-price-heading">
-<span class="inline-flex items-center gap-2 text-xs uppercase tracking-wider font-bold text-secondary"><span class="calendar-legend-dot bg-[#bd8c32]" aria-hidden="true"></span>Se etter gul markering</span>
+<span class="inline-flex items-center gap-2 text-xs uppercase tracking-wider font-bold text-secondary"><span class="calendar-legend-dot bg-[#dda900]" aria-hidden="true"></span>Se etter gul markering</span>
 <h3 id="flexible-price-heading" class="font-headline text-2xl">Små grupper, lavere pris</h3>
 <p class="text-sm leading-relaxed">På ukedager og i ferie-, selvstudie- og eksamensperioder kan dere leie én eller flere netter. I disse periodene gjelder samme pris også i helgene.</p>
 <dl class="space-y-4 text-sm">
@@ -498,7 +498,7 @@ function renderCalendar() {
   const sel   = document.getElementById('cal-selection');
 
   title.textContent = `${MONTHS[viewMonth]} ${viewYear}`;
-  document.getElementById('cal-clear').disabled = !startDate;
+  document.getElementById('cal-clear').disabled = !startDate && !endDate;
   grid.innerHTML = '';
 
   const today    = new Date(); today.setHours(0,0,0,0);
@@ -533,6 +533,7 @@ function renderCalendar() {
     const arrival = !occupancy.morning && occupancy.afternoon;
     const departure = occupancy.morning && !occupancy.afternoon;
     const selected = key === startKey || key === endKey;
+    const kind = departure ? priceKind(key) : calendarKind(key);
     const checkoutOnly = booked && startDate && !endDate && date > startDate &&
       !rangeHasBookedDates(startDate, date);
 
@@ -542,6 +543,8 @@ function renderCalendar() {
       cls += 'calendar-selected bg-primary text-on-primary font-bold cursor-pointer';
     } else if (checkoutOnly) {
       cls += 'text-on-surface cursor-pointer font-semibold';
+    } else if (arrival) {
+      cls += 'text-on-surface cursor-pointer';
     } else if (booked) {
       cls += 'calendar-unavailable cursor-not-allowed font-semibold';
     } else if (startKey && endKey && key > startKey && key < endKey) {
@@ -552,15 +555,34 @@ function renderCalendar() {
 
     // Only partly occupied boundary dates get a diagonal. Back-to-back bookings
     // occupy both halves and therefore remain a single red cell.
+    if (!isPast && (!booked || arrival) && (!selected || arrival || departure)) cls += ` calendar-rate-${kind}`;
     if (!isPast && arrival) cls += ' calendar-turnover calendar-arrival';
     if (!isPast && departure) cls += ' calendar-turnover calendar-departure';
     d.className = cls;
+    if (!isPast && (arrival || departure)) {
+      const ns = 'http://www.w3.org/2000/svg';
+      const parts = document.createElementNS(ns, 'svg');
+      parts.setAttribute('viewBox', '0 0 100 100');
+      parts.setAttribute('preserveAspectRatio', 'none');
+      parts.setAttribute('aria-hidden', 'true');
+      parts.setAttribute('class', 'calendar-parts');
+      const paths = [
+        ['calendar-morning', 'M 9 4 H 87 Q 92 4 88 8 L 8 88 Q 4 92 4 87 V 9 Q 4 4 9 4 Z'],
+        ['calendar-afternoon', 'M 91 96 H 13 Q 8 96 12 92 L 92 12 Q 96 8 96 13 V 91 Q 96 96 91 96 Z']
+      ];
+      paths.forEach(([className, outline]) => {
+        const path = document.createElementNS(ns, 'path');
+        path.setAttribute('class', className);
+        path.setAttribute('d', outline);
+        parts.appendChild(path);
+      });
+      d.appendChild(parts);
+    }
     const number = document.createElement('span');
     number.className = 'calendar-day-number';
     number.textContent = day;
     d.appendChild(number);
-    d.disabled = isPast || (booked && !checkoutOnly && !selected);
-    const kind = calendarKind(key);
+    d.disabled = isPast || (booked && !arrival && !checkoutOnly && !selected);
     const priceLabel = kind === 'standard' ? 'Vanlig helg – fredag til søndag. Helgeprisen dekker fredag og lørdag natt' 
       : kind === 'flexible' ? 'Fleksibel pris – fra én natt' : 'Pris avklares med hovmester';
     const statusLabel = isPast ? 'Tidligere dato'
@@ -570,9 +592,11 @@ function renderCalendar() {
       : booked ? 'Opptatt hele dagen' : priceLabel;
     d.setAttribute('aria-label', `${day}. ${MONTHS[viewMonth]} ${viewYear}: ${statusLabel}`);
     d.title = statusLabel;
-    if (!isPast && !booked) {
+    if (!isPast && (!booked || arrival)) {
       const dot = document.createElement('span');
       dot.className = `calendar-dot calendar-dot-${kind}`;
+      if (arrival) { dot.style.left = '7px'; dot.style.top = '7px'; dot.style.bottom = 'auto'; }
+      if (departure) { dot.style.right = '7px'; }
       dot.setAttribute('aria-hidden', 'true');
       d.appendChild(dot);
     }
@@ -600,6 +624,8 @@ function renderCalendar() {
   } else if (startDate) {
     const fmt = d => `${d.getDate()}. ${MONTHS[d.getMonth()]}`;
     sel.textContent = `Innsjekk: ${fmt(startDate)} — velg utsjekk`;
+  } else if (endDate) {
+    sel.textContent = `Utsjekk: ${endDate.getDate()}. ${MONTHS[endDate.getMonth()]} — velg en tidligere innsjekksdato`;
   } else {
     sel.textContent = '';
   }
@@ -632,19 +658,32 @@ function handleDayClick(y, m, day) {
     return;
   }
   let selectionError = '';
-  if (!startDate || endDate) {
-    if (isBooked(key)) return;
-    startDate = clicked;
-    endDate = null;
+  const occupancy = bookingDayState(key);
+  const arrivalOnly = !occupancy.morning && occupancy.afternoon;
+  if (!startDate && endDate) {
+    if (clicked >= endDate || occupancy.afternoon || rangeHasBookedDates(clicked, endDate)) {
+      selectionError = 'Velg en ledig innsjekksdato før valgt utsjekk. Oppholdet kan ikke krysse opptatte netter.';
+    } else {
+      startDate = clicked;
+    }
+  } else if (!startDate || endDate) {
+    if (occupancy.afternoon) {
+      if (!arrivalOnly) return;
+      // A new group arrives in the afternoon: the morning can be departure
+      // for a preceding stay, even when this is the first calendar click.
+      startDate = null;
+      endDate = clicked;
+    } else {
+      startDate = clicked;
+      endDate = null;
+    }
   } else if (clicked < startDate) {
-    if (isBooked(key)) return;
+    if (occupancy.afternoon) return;
     startDate = clicked;
     endDate = null;
   } else if (rangeHasBookedDates(startDate, clicked)) {
-    // Behold valgt innsjekk ved konflikt; ingen datoer justeres automatisk.
     selectionError = 'Perioden inneholder opptatte netter. Velg en tidligere utsjekk eller tøm datovalget.';
   } else {
-    // Utsjekk er tillatt også når neste gruppe ankommer samme dato.
     endDate = clicked;
   }
   renderCalendar();
