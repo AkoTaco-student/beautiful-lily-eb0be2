@@ -83,6 +83,11 @@
             background-color: #fbf9f4;
             color: #1b1c19;
         }
+        .calendar-dot { width: 6px; height: 6px; border-radius: 50%; position: absolute; bottom: 6px; }
+        .calendar-dot-standard { background: #43704b; }
+        .calendar-dot-flexible { background: #a87612; }
+        .calendar-dot-unknown { background: #747872; }
+        .calendar-legend-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
         .serif-text { font-family: 'Newsreader', serif; }
         .glass-nav {
             background: rgba(251, 249, 244, 0.8);
@@ -149,6 +154,13 @@ document.getElementById('mobile-menu-btn').addEventListener('click', function() 
 <div class="font-label opacity-50 font-bold">SØN</div>
 </div>
 <div id="cal-grid" class="grid grid-cols-7 gap-1"></div>
+<div class="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-xs text-on-surface-variant" aria-label="Kalenderforklaring">
+<span class="inline-flex items-center gap-2"><span class="calendar-legend-dot bg-[#43704b]" aria-hidden="true"></span>Fast helgepris</span>
+<span class="inline-flex items-center gap-2"><span class="calendar-legend-dot bg-[#a87612]" aria-hidden="true"></span>Fleksibel pris</span>
+<span class="inline-flex items-center gap-2"><span class="calendar-legend-dot bg-red-500" aria-hidden="true"></span>Opptatt</span>
+<span class="inline-flex items-center gap-2"><span class="calendar-legend-dot bg-[#747872]" aria-hidden="true"></span>Pris avklares</span>
+</div>
+<p class="mt-3 text-xs leading-relaxed text-on-surface-variant">Velg innsjekk og utsjekk. Prikken viser prisen for natten som starter på datoen. Utsjekksdagen telles ikke som en overnatting.</p>
 <p id="cal-selection" class="mt-4 text-sm text-secondary font-label font-bold text-center min-h-[1.5rem]"></p>
 </section>
 <form id="booking-form" class="space-y-8" name="booking" data-netlify="true">
@@ -244,8 +256,8 @@ document.getElementById('mobile-menu-btn').addEventListener('click', function() 
 </div>
 
 <div id="price-box" class="hidden mt-4 p-5 bg-primary rounded-lg text-on-primary space-y-2">
-<p class="font-label text-xs uppercase tracking-widest opacity-70">Beregnet pris</p>
-<p id="price-details" class="text-sm opacity-80"></p>
+<p class="font-label text-xs uppercase tracking-widest opacity-70">Pris for hele oppholdet</p>
+<p id="price-details" class="text-sm opacity-80 whitespace-pre-line"></p>
 <p id="price-total" class="font-headline text-3xl"></p>
 <p class="text-xs opacity-60 italic">Endelig pris bekreftes av hovmester</p>
 </div>
@@ -259,7 +271,7 @@ document.getElementById('mobile-menu-btn').addEventListener('click', function() 
 </p>
 </form>
 </div>
-<aside class="lg:col-span-5 sticky top-32">
+<aside class="lg:col-span-5 space-y-6">
 <div class="bg-surface-container-low rounded-lg overflow-hidden flex flex-col">
 <div class="relative h-64">
 <img class="w-full h-full object-cover" data-alt="high-end modern cabin interior with floor to ceiling windows overlooking misty forest at dusk with warm accent lighting" src="Bilder av hytta/IMG_0891.JPG"/>
@@ -272,53 +284,45 @@ document.getElementById('mobile-menu-btn').addEventListener('click', function() 
 </div>
 </div>
 </div>
-<div class="p-8 md:p-10 space-y-8">
-<div class="space-y-3 text-sm">
-<p class="font-label text-xs uppercase tracking-widest text-secondary font-bold mb-3">Undervisningsperiode</p>
-<div class="flex justify-between text-on-surface-variant">
-<span>Interne — helg (min. 10 pers)</span>
-<span class="font-bold text-on-surface">Kr 2 800–7 000</span>
-</div>
-<div class="flex justify-between text-on-surface-variant">
-<span>Interne — ukedag (per pers)</span>
-<span class="font-bold text-on-surface">Max kr 3 500</span>
-</div>
-<div class="flex justify-between text-on-surface-variant">
-<span>Eksterne — helg (hele hytta)</span>
-<span class="font-bold text-on-surface">Kr 14 000</span>
-</div>
-<div class="flex justify-between text-on-surface-variant">
-<span>Eksterne — ukedag (min. 10 pers)</span>
-<span class="font-bold text-on-surface">Kr 2 800–7 000</span>
-</div>
-<div class="h-px bg-outline-variant/30 my-2"></div>
-<p class="font-label text-xs uppercase tracking-widest text-secondary font-bold mb-3">Eksamen &amp; Ferie</p>
-<div class="flex justify-between text-on-surface-variant">
-<span>Interne — helg/ukedag (per pers)</span>
-<span class="font-bold text-on-surface">Max kr 3 500</span>
-</div>
-<div class="flex justify-between text-on-surface-variant">
-<span>Eksterne — helg (min. 10 pers)</span>
-<span class="font-bold text-on-surface">Kr 5 600–14 000</span>
-</div>
-<div class="flex justify-between text-on-surface-variant">
-<span>Eksterne — ukedag (min. 10 pers)</span>
-<span class="font-bold text-on-surface">Kr 2 800–7 000</span>
-</div>
-<div class="flex justify-between font-headline text-xl pt-3 border-t border-outline-variant/30">
-<span>Kontakt for endelig pris</span>
-<a href="mailto:hovmester@eshyttekom.no" class="text-secondary underline text-sm font-label">hovmester@</a>
-</div>
-</div>
-</div>
-</div>
-<div class="mt-8 bg-secondary-fixed/30 rounded-lg p-6 flex items-start space-x-4">
-<span class="material-symbols-outlined text-on-secondary-fixed-variant">eco</span>
+<div class="p-6 md:p-8 space-y-7">
 <div>
-<h4 class="font-label font-bold text-sm text-on-secondary-fixed mb-1 uppercase tracking-wider">MILJØVENNLIG OPPHOLD</h4>
-<p class="text-xs text-on-secondary-fixed-variant leading-relaxed">Hytta forvaltes av Hyttestyret og HytteComitéen med fokus på bærekraftig drift og dugnadsånd.</p>
+<p class="font-label text-xs uppercase tracking-widest text-secondary font-bold mb-3">Slik fungerer prisene</p>
+<h2 class="font-headline text-3xl leading-tight">Velg en helg – eller et rimeligere opphold for en liten gruppe.</h2>
+</div>
+<section class="space-y-4" aria-labelledby="standard-price-heading">
+<h3 id="standard-price-heading" class="font-headline text-2xl">Vanlige semesterhelger</h3>
+<p class="text-sm leading-relaxed text-on-surface-variant">I undervisningsperioden leies helgen samlet, fra fredag til søndag. Prisen gjelder hele hytta, uansett antall gjester.</p>
+<dl class="space-y-3">
+<div class="flex flex-wrap justify-between gap-2"><dt class="text-sm">Interne – EMIL / Smørekoppen</dt><dd class="font-bold">7 000 kr / helg</dd></div>
+<div class="flex flex-wrap justify-between gap-2"><dt class="text-sm">Eksterne</dt><dd class="font-bold">14 000 kr / helg</dd></div>
+</dl>
+<p class="text-xs text-on-surface-variant">To netter: 3 500 kr per natt for interne og 7 000 kr per natt for eksterne.</p>
+</section>
+<section class="rounded-lg bg-secondary-fixed/35 p-5 space-y-4" aria-labelledby="flexible-price-heading">
+<span class="inline-flex items-center gap-2 text-xs uppercase tracking-wider font-bold text-secondary"><span class="calendar-legend-dot bg-[#a87612]" aria-hidden="true"></span>Se etter den gule prikken</span>
+<h3 id="flexible-price-heading" class="font-headline text-2xl">Små grupper, lavere pris</h3>
+<p class="text-sm leading-relaxed">På ukedager og i ferie-, selvstudie- og eksamensperioder kan dere leie én eller flere netter. I disse periodene gjelder samme pris også i helgene.</p>
+<dl class="space-y-4 text-sm">
+<div><dt class="font-bold">Interne</dt><dd class="mt-1">140 kr per person per natt. Fra 1 gjest, maks 3 500 kr per natt ved 25–48 gjester.</dd></div>
+<div><dt class="font-bold">Eksterne</dt><dd class="mt-1">280 kr per person per natt. Minstepris 2 800 kr per natt, maks 7 000 kr per natt ved 25–48 gjester.</dd></div>
+</dl>
+<p class="text-xs leading-relaxed text-on-surface-variant">Eksterne grupper med færre enn 10 gjester betaler for 10. Oppgi likevel det faktiske antallet gjester i skjemaet.</p>
+<div class="border-t border-secondary/20 pt-4 space-y-2 text-sm">
+<p class="font-bold">Eksempler for én natt</p>
+<p>1 intern gjest: <strong>140 kr</strong></p>
+<p>10 interne gjester: <strong>1 400 kr</strong></p>
+<p>6 eksterne gjester: <strong>2 800 kr</strong></p>
+</div>
+<p class="text-xs leading-relaxed text-on-surface-variant">For 25 eller flere er prisen per natt lik vanlig helgepris per natt. Fordelen er at dere kan velge bare én natt.</p>
+</section>
+<p class="text-sm leading-relaxed text-on-surface-variant">Alle netter summeres. Opphold som går over flere helger får pris for hver helg og hver øvrige natt. Velg datoer, gjestetype og antall for å se prisfordelingen i skjemaet.</p>
 </div>
 </div>
+<section class="bg-surface-container-high rounded-lg p-6 md:p-8 space-y-3" aria-labelledby="booking-contact-heading">
+<h3 id="booking-contact-heading" class="font-headline text-2xl">Spørsmål om oppholdet?</h3>
+<p class="text-sm text-on-surface-variant">Kontakt hovmester for spesielle ønsker eller avklaring av pris.</p>
+<a href="mailto:hovmester@eshyttekom.no" class="block text-primary underline underline-offset-4 text-base break-all">hovmester@eshyttekom.no</a>
+</section>
 </aside>
 </div>
 <section class="mt-24 pt-12 border-t border-outline-variant/20">
@@ -356,6 +360,63 @@ document.getElementById('mobile-menu-btn').addEventListener('click', function() 
 // ── Supabase konfig (bytt ut med dine verdier) ────────────────────────────
 const SUPABASE_URL      = 'https://rcutzmjiiiyfzrmbefoa.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJjdXR6bWppaWl5ZnpybWJlZm9hIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU1NjA5MjgsImV4cCI6MjA5MTEzNjkyOH0.aIu1mN3VFLG6E9kffhz2nRZrIH6o1aih-o0ARZWk9EQ';
+
+// ── Prisregler og perioder ────────────────────────────────────────────────
+// Avklart med administrator 02.10.2026. NTNUs FUS/FUI-kalender 2026–2027.
+// Datoene angir natten som begynner denne datoen. Utsjekk er eksklusiv.
+const PRICE_CALENDAR = {
+  from: '2026-08-17', through: '2027-07-31',
+  teaching: [
+    { from: '2026-08-17', through: '2026-11-17' },
+    { from: '2027-01-11', through: '2027-04-27' }
+  ],
+  holidays: [{ from: '2027-03-22', through: '2027-03-30' }]
+};
+
+function dayNumber(key) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(key)) return NaN;
+  const [y, m, d] = key.split('-').map(Number);
+  const t = Date.UTC(y, m - 1, d);
+  return new Date(t).toISOString().slice(0, 10) === key ? t / 86400000 : NaN;
+}
+function dayKey(number) { return new Date(number * 86400000).toISOString().slice(0, 10); }
+function priceKind(key) {
+  if (key < PRICE_CALENDAR.from || key > PRICE_CALENDAR.through) return 'unknown';
+  const inRange = range => key >= range.from && key <= range.through;
+  const weekday = new Date(dayNumber(key) * 86400000).getUTCDay();
+  const teaching = PRICE_CALENDAR.teaching.some(inRange);
+  const holiday = PRICE_CALENDAR.holidays.some(inRange);
+  return teaching && !holiday && (weekday === 5 || weekday === 6) ? 'standard' : 'flexible';
+}
+function quoteStay(from, to, type, count) {
+  const first = dayNumber(from), last = dayNumber(to);
+  if (!Number.isFinite(first) || !Number.isFinite(last) || last <= first) {
+    return { error: 'Velg en gyldig innsjekksdato og en senere utsjekksdato.' };
+  }
+  if (!['intern', 'ekstern'].includes(type) || !Number.isInteger(count) || count < 1 || count > 48) {
+    return { error: 'Velg gjestetype og antall gjester fra 1 til 48.' };
+  }
+  const nights = [];
+  for (let n = first; n < last; n++) {
+    const key = dayKey(n), kind = priceKind(key);
+    const weekday = new Date(n * 86400000).getUTCDay();
+    if (kind === 'standard') {
+      const friday = weekday === 5 ? n : n - 1;
+      if (first > friday || last < friday + 2) {
+        return { error: 'I undervisningsperioden må hele helgen leies: innsjekk senest fredag og utsjekk tidligst søndag. Velg begge nettene.' };
+      }
+    }
+    const rate = kind === 'standard' ? (type === 'intern' ? 3500 : 7000)
+      : kind === 'flexible' ? (type === 'intern' ? Math.min(count, 25) * 140 : Math.min(Math.max(count, 10), 25) * 280)
+      : null;
+    nights.push({ date: key, kind, rate });
+  }
+  if (nights.some(n => n.kind === 'unknown')) {
+    return { nights, total: null, manual: true };
+  }
+  return { nights, total: nights.reduce((sum, n) => sum + n.rate, 0), manual: false };
+}
+function kr(amount) { return amount.toLocaleString('nb-NO') + ' kr'; }
 
 // ── Kalender ──────────────────────────────────────────────────────────────
 const MONTHS = ['Januar','Februar','Mars','April','Mai','Juni',
@@ -429,12 +490,13 @@ function renderCalendar() {
   }
 
   for (let day = 1; day <= daysInMonth; day++) {
-    const d    = document.createElement('div');
+    const d    = document.createElement('button');
+    d.type = 'button';
     const date = new Date(viewYear, viewMonth, day);
     const key  = toKey(viewYear, viewMonth, day);
     const isPast = date < today;
 
-    let cls = 'h-14 flex items-center justify-center rounded-lg text-sm font-body transition-colors ';
+    let cls = 'relative h-14 flex items-center justify-center rounded-lg text-sm font-body transition-colors ';
 
     const booked = isBooked(key);
 
@@ -450,8 +512,21 @@ function renderCalendar() {
       cls += 'hover:bg-surface-container-high cursor-pointer';
     }
 
-    d.className   = cls;
+    d.className = cls;
     d.textContent = day;
+    d.disabled = isPast || booked;
+    const kind = priceKind(key);
+    const priceLabel = kind === 'standard' ? 'Fast helgepris – hele helgen må leies'
+      : kind === 'flexible' ? 'Fleksibel pris – fra én natt' : 'Pris avklares med hovmester';
+    const statusLabel = isPast ? 'Tidligere dato' : booked ? 'Opptatt' : priceLabel;
+    d.setAttribute('aria-label', `${day}. ${MONTHS[viewMonth]} ${viewYear}: ${statusLabel}`);
+    d.title = statusLabel;
+    if (!isPast && !booked) {
+      const dot = document.createElement('span');
+      dot.className = `calendar-dot calendar-dot-${kind}`;
+      dot.setAttribute('aria-hidden', 'true');
+      d.appendChild(dot);
+    }
 
     if (!isPast && !booked) {
       d.addEventListener('click', () => handleDayClick(viewYear, viewMonth, day));
@@ -493,6 +568,7 @@ function rangeHasBookedDates(start, end) {
 
 function handleDayClick(y, m, day) {
   const clicked = new Date(y, m, day);
+  let selectionError = '';
   if (!startDate || (startDate && endDate)) {
     startDate = clicked;
     endDate   = null;
@@ -504,12 +580,13 @@ function handleDayClick(y, m, day) {
       // Periode krysser opptatte dager — start på nytt
       startDate = clicked;
       endDate   = null;
-      document.getElementById('cal-selection').textContent = 'Perioden inneholder opptatte dager. Velg ny innsjekk.';
+      selectionError = 'Perioden inneholder opptatte dager. Velg ny innsjekk.';
     } else {
       endDate = clicked;
     }
   }
   renderCalendar();
+  if (selectionError) document.getElementById('cal-selection').textContent = selectionError;
   updatePrice();
 }
 
@@ -539,69 +616,47 @@ guestCount.addEventListener('change', () => {
 document.getElementById('guest-type').addEventListener('change', updatePrice);
 
 // ── Prisberegning ──────────────────────────────────────────────────────────
-function isWeekendPeriod(start, end) {
-  // Returns true if the period includes a Friday, Saturday or Sunday
-  let d = new Date(start);
-  while (d <= end) {
-    if (d.getDay() === 5 || d.getDay() === 6 || d.getDay() === 0) return true;
-    d.setDate(d.getDate() + 1);
-  }
-  return false;
-}
-
 function formatIsoDate(d) {
   return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
 }
 
 function updatePrice() {
-  const box     = document.getElementById('price-box');
+  const box = document.getElementById('price-box');
   const details = document.getElementById('price-details');
-  const total   = document.getElementById('price-total');
-  const type    = document.getElementById('guest-type').value;
-
+  const total = document.getElementById('price-total');
+  const type = document.getElementById('guest-type').value;
+  calculatedPrice = null;
+  hiddenPris.value = '';
+  hiddenPeriode.value = '';
   if (!startDate || !endDate || !type || !guests) {
-    calculatedPrice = null;
-    hiddenPris.value = '';
-    hiddenPeriode.value = '';
     box.classList.add('hidden');
     return;
   }
-
-  const nights  = Math.round((endDate - startDate) / 86400000);
-  const weekend = isWeekendPeriod(startDate, endDate);
-  let pris = 0;
-  let desc = '';
-
-  if (type === 'intern') {
-    if (weekend) {
-      // 280 kr/person, min 2800, max 7000
-      pris = Math.min(Math.max(guests * 250 * 1.12, 2500*1.12), 6250*1.12);
-      desc = `Intern helg · ${guests} pers × 280 kr (min 2 800, max 7 000)`;
-    } else {
-      // 140 kr/person/natt, max 3500/natt
-      const perNight = Math.min(guests * 125 * 1.12, 3125 * 1.12);
-      pris = perNight * nights;
-      desc = `Intern ukedag · ${guests} pers × 140 kr × ${nights} natt${nights>1?'er':''}`;
-    }
-  } else {
-    if (weekend) {
-      // Flat 14000 kr
-      pris = 12500 * 1.12;
-      desc = `Ekstern helg · flat pris`;
-    } else {
-      // 280 kr/person/natt, min 2800, max 7000/natt
-      const perNight = Math.min(Math.max(guests * 250 * 1.12, 2500*1.12), 6250*1.12);
-      pris = perNight * nights;
-      desc = `Ekstern ukedag · ${guests} pers × 280 kr × ${nights} natt${nights>1?'er':''}`;
-    }
-  }
-
-  details.textContent = desc;
-  total.textContent   = `Kr ${pris.toLocaleString('nb-NO')}`;
-  calculatedPrice = pris;
-  hiddenPris.value = pris;
-  hiddenPeriode.value = `${formatIsoDate(startDate)} → ${formatIsoDate(endDate)}`;
+  const from = formatIsoDate(startDate), to = formatIsoDate(endDate);
+  const quote = quoteStay(from, to, type, guests);
   box.classList.remove('hidden');
+  if (quote.error) {
+    details.textContent = quote.error;
+    total.textContent = 'Velg hele helgen';
+    return;
+  }
+  hiddenPeriode.value = `${from} → ${to}`;
+  if (quote.manual) {
+    details.textContent = `${quote.nights.length} netter. Prisperiodene etter 31. juli 2027 er ikke fastsatt i kalenderen. Dere kan sende en forespørsel; hovmester avklarer prisen.`;
+    total.textContent = 'Pris må avklares';
+    return;
+  }
+  const standard = quote.nights.filter(n => n.kind === 'standard');
+  const flexible = quote.nights.filter(n => n.kind === 'flexible');
+  const lines = [`${quote.nights.length} ${quote.nights.length === 1 ? 'natt' : 'netter'} · ${guests} ${guests === 1 ? 'gjest' : 'gjester'} · ${type === 'intern' ? 'interne' : 'eksterne'}`];
+  if (standard.length) lines.push(`Fast helgepris: ${standard.length} netter × ${kr(standard[0].rate)} = ${kr(standard.length * standard[0].rate)}`);
+  if (flexible.length) lines.push(`Fleksibel pris: ${flexible.length} ${flexible.length === 1 ? 'natt' : 'netter'} × ${kr(flexible[0].rate)} = ${kr(flexible.length * flexible[0].rate)}`);
+  if (flexible.length && type === 'ekstern' && guests < 10) lines.push('Minstepris for 10 betalende gjester er brukt.');
+  if (flexible.length && guests >= 25) lines.push('Makspris per natt for grupper på 25–48 gjester er brukt.');
+  details.textContent = lines.join('\n');
+  total.textContent = kr(quote.total);
+  calculatedPrice = quote.total;
+  hiddenPris.value = quote.total;
 }
 
 // ── Skjema-innsending via Netlify Function → Supabase ─────────────────────
@@ -610,6 +665,14 @@ document.getElementById('booking-form').addEventListener('submit', async functio
 
   const btn = document.getElementById('submit-btn');
   const errBox = document.getElementById('form-error');
+  const type = document.getElementById('guest-type').value;
+  const quote = quoteStay(startDate ? formatIsoDate(startDate) : '', endDate ? formatIsoDate(endDate) : '', type, guests);
+  if (quote.error || (startDate && endDate && rangeHasBookedDates(startDate, endDate))) {
+    errBox.textContent = quote.error || 'Perioden inneholder opptatte dager. Velg en ledig periode.';
+    errBox.classList.remove('hidden');
+    return;
+  }
+  updatePrice();
   btn.disabled = true;
   btn.textContent = 'Sender…';
   errBox.classList.add('hidden');
