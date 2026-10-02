@@ -83,11 +83,11 @@
             background-color: #fbf9f4;
             color: #1b1c19;
         }
-        .calendar-dot { width: 6px; height: 6px; border-radius: 50%; position: absolute; bottom: 6px; }
-        .calendar-dot-standard { background: #43704b; }
-        .calendar-dot-flexible { background: #a87612; }
+        .calendar-dot { width: 10px; height: 10px; border-radius: 50%; position: absolute; bottom: 5px; border: 1px solid rgba(27, 28, 25, 0.25); }
+        .calendar-dot-standard { background: #22c55e; }
+        .calendar-dot-flexible { background: #facc15; }
         .calendar-dot-unknown { background: #747872; }
-        .calendar-legend-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+        .calendar-legend-dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; border: 1px solid rgba(27, 28, 25, 0.25); }
         .serif-text { font-family: 'Newsreader', serif; }
         .glass-nav {
             background: rgba(251, 249, 244, 0.8);
@@ -155,13 +155,14 @@ document.getElementById('mobile-menu-btn').addEventListener('click', function() 
 </div>
 <div id="cal-grid" class="grid grid-cols-7 gap-1"></div>
 <div class="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-xs text-on-surface-variant" aria-label="Kalenderforklaring">
-<span class="inline-flex items-center gap-2"><span class="calendar-legend-dot bg-[#43704b]" aria-hidden="true"></span>Fast helgepris</span>
-<span class="inline-flex items-center gap-2"><span class="calendar-legend-dot bg-[#a87612]" aria-hidden="true"></span>Fleksibel pris</span>
+<span class="inline-flex items-center gap-2"><span class="calendar-legend-dot bg-[#22c55e]" aria-hidden="true"></span>Vanlig helg (fre–søn)</span>
+<span class="inline-flex items-center gap-2"><span class="calendar-legend-dot bg-[#facc15]" aria-hidden="true"></span>Fleksibel pris</span>
 <span class="inline-flex items-center gap-2"><span class="calendar-legend-dot bg-red-500" aria-hidden="true"></span>Opptatt</span>
 <span class="inline-flex items-center gap-2"><span class="calendar-legend-dot bg-[#747872]" aria-hidden="true"></span>Pris avklares</span>
 </div>
-<p class="mt-3 text-xs leading-relaxed text-on-surface-variant">Velg innsjekk og utsjekk. Prikken viser prisen for natten som starter på datoen. Utsjekksdagen telles ikke som en overnatting.</p>
-<p id="cal-selection" class="mt-4 text-sm text-secondary font-label font-bold text-center min-h-[1.5rem]"></p>
+<p class="mt-3 text-xs leading-relaxed text-on-surface-variant">Velg innsjekk og utsjekk. Grønn prikk markerer vanlig helg, fredag–søndag. Helgeprisen dekker fredag og lørdag natt. Utsjekksdagen telles ikke som en overnatting.</p>
+<p id="cal-selection" class="mt-4 text-sm text-secondary font-label font-bold text-center min-h-[1.5rem]" aria-live="polite"></p>
+<div class="mt-3 text-center"><button type="button" id="cal-clear" class="text-sm text-primary underline underline-offset-4 py-2 px-3 disabled:opacity-40 disabled:cursor-not-allowed">Tøm datovalget</button></div>
 </section>
 <form id="booking-form" class="space-y-8" name="booking" data-netlify="true">
 <input type="hidden" name="form-name" value="booking"/>
@@ -293,25 +294,25 @@ document.getElementById('mobile-menu-btn').addEventListener('click', function() 
 <h3 id="standard-price-heading" class="font-headline text-2xl">Vanlige semesterhelger</h3>
 <p class="text-sm leading-relaxed text-on-surface-variant">I undervisningsperioden leies helgen samlet, fra fredag til søndag. Prisen gjelder hele hytta, uansett antall gjester.</p>
 <dl class="space-y-3">
-<div class="flex flex-wrap justify-between gap-2"><dt class="text-sm">Interne – EMIL / Smørekoppen</dt><dd class="font-bold">7 000 kr / helg</dd></div>
-<div class="flex flex-wrap justify-between gap-2"><dt class="text-sm">Eksterne</dt><dd class="font-bold">14 000 kr / helg</dd></div>
+<div class="flex flex-wrap justify-between gap-2"><dt class="text-sm">Interne – EMIL / Smørekoppen</dt><dd class="font-bold">7&nbsp;000&nbsp;kr / helg</dd></div>
+<div class="flex flex-wrap justify-between gap-2"><dt class="text-sm">Eksterne</dt><dd class="font-bold">14&nbsp;000&nbsp;kr / helg</dd></div>
 </dl>
-<p class="text-xs text-on-surface-variant">To netter: 3 500 kr per natt for interne og 7 000 kr per natt for eksterne.</p>
+<p class="text-xs text-on-surface-variant">To netter: 3&nbsp;500&nbsp;kr per natt for interne og 7&nbsp;000&nbsp;kr per natt for eksterne.</p>
 </section>
 <section class="rounded-lg bg-secondary-fixed/35 p-5 space-y-4" aria-labelledby="flexible-price-heading">
-<span class="inline-flex items-center gap-2 text-xs uppercase tracking-wider font-bold text-secondary"><span class="calendar-legend-dot bg-[#a87612]" aria-hidden="true"></span>Se etter den gule prikken</span>
+<span class="inline-flex items-center gap-2 text-xs uppercase tracking-wider font-bold text-secondary"><span class="calendar-legend-dot bg-[#facc15]" aria-hidden="true"></span>Se etter den gule prikken</span>
 <h3 id="flexible-price-heading" class="font-headline text-2xl">Små grupper, lavere pris</h3>
 <p class="text-sm leading-relaxed">På ukedager og i ferie-, selvstudie- og eksamensperioder kan dere leie én eller flere netter. I disse periodene gjelder samme pris også i helgene.</p>
 <dl class="space-y-4 text-sm">
-<div><dt class="font-bold">Interne</dt><dd class="mt-1">140 kr per person per natt. Fra 1 gjest, maks 3 500 kr per natt ved 25–48 gjester.</dd></div>
-<div><dt class="font-bold">Eksterne</dt><dd class="mt-1">280 kr per person per natt. Minstepris 2 800 kr per natt, maks 7 000 kr per natt ved 25–48 gjester.</dd></div>
+<div><dt class="font-bold">Interne</dt><dd class="mt-1">140&nbsp;kr per person per natt. Fra 1 gjest, maks 3&nbsp;500&nbsp;kr per natt ved 25–48 gjester.</dd></div>
+<div><dt class="font-bold">Eksterne</dt><dd class="mt-1">280&nbsp;kr per person per natt. Minstepris 2&nbsp;800&nbsp;kr per natt, maks 7&nbsp;000&nbsp;kr per natt ved 25–48 gjester.</dd></div>
 </dl>
 <p class="text-xs leading-relaxed text-on-surface-variant">Eksterne grupper med færre enn 10 gjester betaler for 10. Oppgi likevel det faktiske antallet gjester i skjemaet.</p>
 <div class="border-t border-secondary/20 pt-4 space-y-2 text-sm">
 <p class="font-bold">Eksempler for én natt</p>
-<p>1 intern gjest: <strong>140 kr</strong></p>
-<p>10 interne gjester: <strong>1 400 kr</strong></p>
-<p>6 eksterne gjester: <strong>2 800 kr</strong></p>
+<p>1 intern gjest: <strong>140&nbsp;kr</strong></p>
+<p>10 interne gjester: <strong>1&nbsp;400&nbsp;kr</strong></p>
+<p>6 eksterne gjester: <strong>2&nbsp;800&nbsp;kr</strong></p>
 </div>
 <p class="text-xs leading-relaxed text-on-surface-variant">For 25 eller flere er prisen per natt lik vanlig helgepris per natt. Fordelen er at dere kan velge bare én natt.</p>
 </section>
@@ -334,7 +335,7 @@ document.getElementById('mobile-menu-btn').addEventListener('click', function() 
 </div>
 <div class="space-y-4">
 <p class="font-bold text-secondary tracking-widest uppercase">INNSJEKK/UTSJEKK</p>
-<p>Innsjekk fra kl. 14:00. Utsjekk innen kl. 11:00. Kode til nøkkelboks sendes 24 timer før ankomst.</p>
+<p>Innsjekk fra kl. 16:00. Utsjekk senest kl. 14:00, også på søndager. Senere utsjekk kan avtales med hovmester. Ved bytte av gruppe samme dag er det to timer mellom utsjekk og innsjekk. Kode til nøkkelboks sendes 24 timer før ankomst.</p>
 </div>
 <div class="space-y-4">
 <p class="font-bold text-secondary tracking-widest uppercase">HUSREGLER</p>
@@ -387,6 +388,15 @@ function priceKind(key) {
   const teaching = PRICE_CALENDAR.teaching.some(inRange);
   const holiday = PRICE_CALENDAR.holidays.some(inRange);
   return teaching && !holiday && (weekday === 5 || weekday === 6) ? 'standard' : 'flexible';
+}
+function calendarKind(key) {
+  const kind = priceKind(key);
+  const n = dayNumber(key);
+  if (kind === 'flexible' && new Date(n * 86400000).getUTCDay() === 0 &&
+      priceKind(dayKey(n - 2)) === 'standard' && priceKind(dayKey(n - 1)) === 'standard') {
+    return 'standard';
+  }
+  return kind;
 }
 function quoteStay(from, to, type, count) {
   const first = dayNumber(from), last = dayNumber(to);
@@ -451,14 +461,15 @@ async function lastBookinger() {
 
 function isBooked(key) {
   const d = keyToDate(key);
+  // Opptatte netter: innsjekk er inklusiv, utsjekk er eksklusiv.
   // Sjekk Supabase-bookinger
   const fraSupabase = bookedePerioder.some(p => {
     if (!p.fra_dato || !p.til_dato) return false;
-    return d >= keyToDate(p.fra_dato) && d <= keyToDate(p.til_dato);
+    return d >= keyToDate(p.fra_dato) && d < keyToDate(p.til_dato);
   });
   // Sjekk manuell bookinger.js
   const fraFil = (BOOKEDE_PERIODER || []).some(p => {
-    return d >= keyToDate(p.fra) && d <= keyToDate(p.til);
+    return d >= keyToDate(p.fra) && d < keyToDate(p.til);
   });
   return fraSupabase || fraFil;
 }
@@ -469,6 +480,7 @@ function renderCalendar() {
   const sel   = document.getElementById('cal-selection');
 
   title.textContent = `${MONTHS[viewMonth]} ${viewYear}`;
+  document.getElementById('cal-clear').disabled = !startDate;
   grid.innerHTML = '';
 
   const today    = new Date(); today.setHours(0,0,0,0);
@@ -499,13 +511,18 @@ function renderCalendar() {
     let cls = 'relative h-14 flex items-center justify-center rounded-lg text-sm font-body transition-colors ';
 
     const booked = isBooked(key);
+    const selected = key === startKey || key === endKey;
+    const checkoutOnly = booked && startDate && !endDate && date > startDate &&
+      !rangeHasBookedDates(startDate, date);
 
     if (isPast) {
       cls += 'opacity-25 cursor-not-allowed';
+    } else if (selected) {
+      cls += 'bg-primary text-on-primary font-bold cursor-pointer';
+    } else if (checkoutOnly) {
+      cls += 'bg-amber-50 text-on-surface border border-amber-300 cursor-pointer font-semibold';
     } else if (booked) {
       cls += 'bg-red-100 text-red-600 line-through cursor-not-allowed font-semibold';
-    } else if (key === startKey || key === endKey) {
-      cls += 'bg-primary text-on-primary font-bold cursor-pointer';
     } else if (startKey && endKey && key > startKey && key < endKey) {
       cls += 'bg-primary-container text-on-primary-container cursor-pointer';
     } else {
@@ -514,11 +531,11 @@ function renderCalendar() {
 
     d.className = cls;
     d.textContent = day;
-    d.disabled = isPast || booked;
-    const kind = priceKind(key);
-    const priceLabel = kind === 'standard' ? 'Fast helgepris – hele helgen må leies'
+    d.disabled = isPast || (booked && !checkoutOnly && !selected);
+    const kind = calendarKind(key);
+    const priceLabel = kind === 'standard' ? 'Vanlig helg – fredag til søndag. Helgeprisen dekker fredag og lørdag natt' 
       : kind === 'flexible' ? 'Fleksibel pris – fra én natt' : 'Pris avklares med hovmester';
-    const statusLabel = isPast ? 'Tidligere dato' : booked ? 'Opptatt' : priceLabel;
+    const statusLabel = isPast ? 'Tidligere dato' : checkoutOnly ? 'Kan velges som utsjekk senest kl. 14. Ny gruppe sjekker inn fra kl. 16' : booked ? 'Opptatt for overnatting' : priceLabel;
     d.setAttribute('aria-label', `${day}. ${MONTHS[viewMonth]} ${viewYear}: ${statusLabel}`);
     d.title = statusLabel;
     if (!isPast && !booked) {
@@ -528,7 +545,7 @@ function renderCalendar() {
       d.appendChild(dot);
     }
 
-    if (!isPast && !booked) {
+    if (!d.disabled) {
       d.addEventListener('click', () => handleDayClick(viewYear, viewMonth, day));
     }
     grid.appendChild(d);
@@ -558,7 +575,7 @@ function renderCalendar() {
 
 function rangeHasBookedDates(start, end) {
   let d = new Date(start);
-  while (d <= end) {
+  while (d < end) {
     const k = toKey(d.getFullYear(), d.getMonth(), d.getDate());
     if (isBooked(k)) return true;
     d.setDate(d.getDate() + 1);
@@ -566,29 +583,44 @@ function rangeHasBookedDates(start, end) {
   return false;
 }
 
+function clearCalendarSelection() {
+  startDate = null;
+  endDate = null;
+  renderCalendar();
+  updatePrice();
+  document.getElementById('form-error').classList.add('hidden');
+}
+
 function handleDayClick(y, m, day) {
   const clicked = new Date(y, m, day);
+  const key = toKey(y, m, day);
+  const matches = date => date && formatIsoDate(date) === key;
+  if (matches(startDate) || matches(endDate)) {
+    clearCalendarSelection();
+    return;
+  }
   let selectionError = '';
-  if (!startDate || (startDate && endDate)) {
+  if (!startDate || endDate) {
+    if (isBooked(key)) return;
     startDate = clicked;
-    endDate   = null;
+    endDate = null;
+  } else if (clicked < startDate) {
+    if (isBooked(key)) return;
+    startDate = clicked;
+    endDate = null;
+  } else if (rangeHasBookedDates(startDate, clicked)) {
+    // Behold valgt innsjekk ved konflikt; ingen datoer justeres automatisk.
+    selectionError = 'Perioden inneholder opptatte netter. Velg en tidligere utsjekk eller tøm datovalget.';
   } else {
-    if (clicked <= startDate) {
-      startDate = clicked;
-      endDate   = null;
-    } else if (rangeHasBookedDates(startDate, clicked)) {
-      // Periode krysser opptatte dager — start på nytt
-      startDate = clicked;
-      endDate   = null;
-      selectionError = 'Perioden inneholder opptatte dager. Velg ny innsjekk.';
-    } else {
-      endDate = clicked;
-    }
+    // Utsjekk er tillatt også når neste gruppe ankommer samme dato.
+    endDate = clicked;
   }
   renderCalendar();
   if (selectionError) document.getElementById('cal-selection').textContent = selectionError;
   updatePrice();
 }
+
+document.getElementById('cal-clear').addEventListener('click', clearCalendarSelection);
 
 document.getElementById('cal-prev').addEventListener('click', () => {
   viewMonth--;
